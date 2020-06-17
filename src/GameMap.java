@@ -7,7 +7,7 @@ public class GameMap {
     private JFrame frame;
     public int[][] map;
     private int mapSide;
-    public Map<int,Block> blocks=new Map<int,Block>();
+    public Map<int,Block> blocks=new HashMap<int,Block>();
 
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
