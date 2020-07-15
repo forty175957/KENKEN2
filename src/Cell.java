@@ -1,25 +1,68 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Cell{
+public class Cell extends JButton{
     private int x,y;
     private GameMap map=GameMap.getInstance();
-    Point A,B,C,D;
+    private String n;
+    private Block block;
 
-    public Cell(int x,int y){
-        this.x=x;
-        this.y=y;
-        A=new Point(x,y);
-        B=new Point(x+map.side,y);
-        C=new Point(x+map.side,y+map.side);
-        D=new Point(x,y+map.side);
+    public Cell( int x, int y, Block block){
+        this.x = x;
+        this.y = y;
+        this.n = new Integer(block.getId()).toString();
+        this.block = block;
+        Border emptyBorder = BorderFactory.createEmptyBorder();
+        setBorder(emptyBorder);
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("cell "+n+" pressed");
+            }
+        });
     }
 
-    public boolean checkNeighbors(Cell[] cells){
-        for (Cell c:cells){
+    @Override
+    protected void paintComponent(Graphics g) {
+        //paint(g);
+        this.setBounds(this.x,this.y,60,60);
+        this.setSize(new Dimension(60,60));
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawString(this.n,30,30);
+        g2.drawString("+",5,10);
+        drawBorder(g2);
+    }
 
+    private void drawBorder(Graphics2D g2){
+        if(map.checkTop(x,y)){                      //TOP
+            g2.setStroke(new BasicStroke(2));
+        }else{
+            g2.setStroke(new BasicStroke(8));
         }
-        return false;
+        g2.drawLine(0,0,60,0);
+        if(map.checkBottom(x,y)){                   //BOTTOM
+            g2.setStroke(new BasicStroke(2));
+        }else{
+            g2.setStroke(new BasicStroke(8));
+        }
+        g2.drawLine(60,0,60,60);
+        if(map.checkRight(x,y)){                      //RIGHT
+            g2.setStroke(new BasicStroke(2));
+        }else{
+            g2.setStroke(new BasicStroke(8));
+        }
+        g2.drawLine(60,60,0,60);
+        if(map.checkLeft(x,y)){                      //LEFT
+            g2.setStroke(new BasicStroke(2));
+        }else{
+            g2.setStroke(new BasicStroke(8));
+        }
+        g2.drawLine(0,60,0,0);
     }
+
 
     public int getX(){
         return x;
@@ -29,47 +72,5 @@ public class Cell{
         return y;
     }
 
-
-
-    /*private Cell NorthCell,SouthCell,WestCell,EastCell;
-    //int lineWidth_1=1;
-
-    public void setNorthCell(Cell notrhCell){
-        NorthCell=notrhCell;
-    }
-    public void setEastCell(Cell eastCell) {
-        EastCell = eastCell;
-    }
-
-    public void setWestCell(Cell westCell) {
-        WestCell = westCell;
-    }
-
-    public void setSouthCell(Cell southCell) {
-        SouthCell = southCell;
-    }
-
-    public void draw(JFrame frame){
-        if(NorthCell!=null){
-            frame.add(new MyLine(x,y,x+sideDimension,y,1));
-        }else{
-            frame.add(new MyLine(x,y,x+sideDimension,y,4));
-        }
-        if(SouthCell!=null){
-            frame.add(new MyLine(x,y+sideDimension,x+sideDimension,y+sideDimension,1));
-        }else{
-            frame.add(new MyLine(x,y+sideDimension,x+sideDimension,y+sideDimension,4));
-        }
-        if(EastCell!=null){
-            frame.add(new MyLine(x+sideDimension,y,x+sideDimension,y+sideDimension,1));
-        }else{
-            frame.add(new MyLine(x+sideDimension,y,x+sideDimension,y+sideDimension,4));
-        }
-        if(WestCell!=null){
-            frame.add(new MyLine(x,y,x,y+sideDimension,1));
-        }else{
-            frame.add(new MyLine(x,y,x,y+sideDimension,4));
-        }
-    }*/
 
 }

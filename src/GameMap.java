@@ -1,21 +1,67 @@
 import javax.swing.*;
-import java.util.Map;
+import java.awt.*;
+import java.util.HashMap;
 
 public class GameMap {
     private static GameMap ISTANCE;
-    public static final int side = 10;
     private JFrame frame;
-    public int[][] map;
-    private int mapSide;
-    public Map<int,Block> blocks=new HashMap<int,Block>();
+    private Container cp;
+    public int[][] map={{1,2,2},{2,2,2},{2,2,3}};
+    private int mapSide=2;
+    public HashMap<Integer,Block> blocks = new HashMap<Integer,Block>();
 
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
         map=new int[mapSide][mapSide];
     }
 
+    private void createMap(){
+        for(int y=0;y<mapSide;y++){
+            for(int x=0;x<mapSide;x++){
+                int id=map[x][y];
+                if( blocks.containsKey(id)){
+                    blocks.get(id).addCell(x,y);
+                }
+                else{
+                    Block b = new Block(id);
+                    b.addCell(x,y);
+                    blocks.put(id,b);
+                }
+            }
+        }
+    }
+
+    public boolean checkTop(int x,int y){
+        if(map[x][y-1]==map[x][y] && y>1) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkBottom(int x,int y){
+        if(map[x][y+1]==map[x][y] && y<mapSide-1) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkLeft(int x,int y){
+        if(map[x-1][y]==map[x][y] && x>1) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkRight(int x,int y){
+        if(map[x+1][y]==map[x][y] && x<mapSide-1) {
+            return true;
+        }
+        return false;
+    }
+
     public void setFrame(JFrame f){
         frame=f;
+        cp=f.getContentPane();
     }
 
     public JFrame getFrame(){
@@ -44,20 +90,4 @@ public class GameMap {
         return false;
     }
 
-    public boolean checkCell(Cell c,int blockId){
-        if(map[c.getX()][c.getY()]==blockId){
-            return true;
-        }
-        return false;
-    }
-
-    private void scanMap(){
-        for(int i=0;i<mapSide;i++){
-            for(int t=0;t<mapSide;t++){
-                if(blocks.containsKey(map[i][t])){
-                    blocks.get(map[i][t]).addCell(i,t);
-                }
-            }
-        }
-    }
 }

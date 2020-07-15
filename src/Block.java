@@ -8,58 +8,17 @@ public class Block {
     private Point startPoint;
     private GameMap Gmap=GameMap.getInstance();
 
-    public Block(int blockId,int x,int y) {
+    public Block(int blockId) {
         this.blockId = blockId;
-        this.startPoint=new Point(x,y);
+    }
+    public int getId(){
+        return blockId;
     }
 
     public void addCell(int x,int y) {
-        Cell cell = new Cell(x,y);
+        if(cells.isEmpty()) startPoint= new Point(x,y);
+        Cell cell = new Cell(x,y,this);
         cells.add(cell);
     }
 
-    private boolean checkLeft(Cell c){
-        int x=c.getX()+Gmap.side;
-        int y=c.getY();
-        if(Gmap.checkCell(x,y,blockId)){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkRight(Cell c){
-        int x=c.getX()-Gmap.side;
-        int y=c.getY();
-        if(Gmap.checkCell(x,y,blockId)){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkDown(Cell c){
-        int x=c.getX();
-        int y=c.getY()+Gmap.side;
-        if(Gmap.checkCell(x,y,blockId)){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkUp(Cell c){
-        int x=c.getX();
-        int y=c.getY()-Gmap.side;
-        if(Gmap.checkCell(x,y,blockId)){
-            return true;
-        }
-        return false;
-    }
-
-
-    public void drawLines(){
-        for (Cell c:cells) {
-            if(checkUp(c)){
-
-            }
-        }
-    }
 }
