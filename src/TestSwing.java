@@ -11,7 +11,7 @@ public class TestSwing extends JFrame {
 
 
     public  TestSwing(int a){
-        super("HelloWorld!");
+        super("KENKEN-MAP");
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(3,3));
         this.setResizable(false);
@@ -21,6 +21,7 @@ public class TestSwing extends JFrame {
         pack();
         setSize(new Dimension(188, 216));
         setVisible(true);
+        Risolutore.resolve(GameMap.getInstance().blocks);
         //setExtendedState(JFrame.);
     }
 

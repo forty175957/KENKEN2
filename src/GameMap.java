@@ -11,11 +11,11 @@ public class GameMap {
     private Container cp;
     private String[] OPS= {"+","-","/","*"};
     public int[][] map = {
-            {1,2,4},
-            {2,2,4},
+            {1,1,2},
+            {1,2,2},
             {3,3,3}};
     public int mapSide=3;
-    private HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
+    public HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
 
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
@@ -25,7 +25,7 @@ public class GameMap {
         Random rand=new Random();
         for (int i=1;i<5;i++){
             String OP=OPS[rand.nextInt(4)];
-            Block b= new Block(i,OP, rand.nextInt(25));
+            Block b= new Block(i,OP, rand.nextInt(10));
             blocks.put(i,b);
         }
         System.out.println(mapSide);
@@ -37,12 +37,17 @@ public class GameMap {
                 }
             }
         }
+        String j = Map.save(map,blocks);
+        int[][] m = Map.load(j);
+        if(m==map){
+            System.out.println("test");
+        }
     }
 
     public boolean checkTop(int x,int y){
         if(y>1) {
             int id = map[x][y];
-            System.out.println("CELL[" + x + "][" + y + "]=" + id + " TOP " + x + " " + (y - 1));
+            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " TOP " + x + " " + (y - 1));
             if (map[x][y - 1] == id ) {
                 return true;
             }
@@ -53,7 +58,7 @@ public class GameMap {
     public boolean checkBottom(int x,int y){
         if(y < mapSide - 1) {
             int id = map[x][y];
-            System.out.println("CELL[" + x + "][" + y + "]=" + id + " BOTTOM " + x + " " + (y + 1));
+            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " BOTTOM " + x + " " + (y + 1));
             if (map[x][y + 1] == map[x][y] ) {
                 return true;
             }
@@ -64,7 +69,7 @@ public class GameMap {
     public boolean checkLeft(int x,int y){
         if(x>1) {
             int id = map[x][y];
-            System.out.println("CELL[" + x + "][" + y + "]=" + id + " LEFT " + (x - 1) + " " + y);
+            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " LEFT " + (x - 1) + " " + y);
             if (map[x - 1][y] == map[x][y]) {
                 return true;
             }
@@ -75,7 +80,7 @@ public class GameMap {
     public boolean checkRight(int x,int y){
         if(x<mapSide-1) {
             int id = map[x][y];
-            System.out.println("CELL[" + x + "][" + y + "]=" + id + " RIGHT " + (x + 1) + " " + y);
+            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " RIGHT " + (x + 1) + " " + y);
             if (map[x + 1][y] == map[x][y]) {
                 return true;
             }

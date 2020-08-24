@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class Cell extends JButton {
     int x, y;
     private GameMap map = GameMap.getInstance();
-    int n;
+    public int n;
     String description="";
     Graphics g;
     Container cp;
@@ -16,15 +16,18 @@ public class Cell extends JButton {
     public Cell(int x, int y, Block block) {
         this.x = x;
         this.y = y;
-        this.n = block.getId();
+        //this.n = block.getId();
+        this.description="("+block.getId()+")";
         this.block = block;
         Border emptyBorder = BorderFactory.createEmptyBorder();
         setBorder(emptyBorder);
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                block.checkBlock();
                 System.out.println("cell " + new Integer(n).toString() + " pressed");
                 editCellValue();
+                block.checkBlock();
             }
         });
     }
@@ -32,9 +35,10 @@ public class Cell extends JButton {
     public Cell(int x, int y, Block block,String description) {
         this.x = x;
         this.y = y;
-        this.description=description;
-        this.n = block.getId();
+        this.description=description+"("+block.getId()+")";
+        //this.n = block.getId();
         this.block = block;
+        setOpaque(true);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         setBorder(emptyBorder);
         addActionListener(new ActionListener() {
@@ -51,23 +55,13 @@ public class Cell extends JButton {
         this.g=g;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
-        g2.drawString(description, 5, 10);
+        g2.drawString(this.description, 5, 10);
         g2.drawString(new Integer(this.n).toString(),30,30);
         drawBorder(g2);
     }
 
     public void editCellValue(){
         new InputBoxPanel(this);
-    }
-
-    public boolean checkValueUpdate(int val){
-        boolean res= block.checkCells(x,y,val);
-        if(res){
-            n=val;
-            GameMap.getInstance().getFrame().getContentPane().revalidate();
-            GameMap.getInstance().getFrame().repaint();
-        }
-        return res;
     }
 
     private void drawBorder(Graphics2D g2) {
