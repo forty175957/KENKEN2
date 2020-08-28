@@ -11,34 +11,42 @@ public class GameMap {
     private Container cp;
     private String[] OPS= {"+","-","/","*"};
     public int[][] map = {
-            {1,1,2},
-            {1,2,2},
-            {3,3,3}};
-    public int mapSide=3;
+            {1,1,2,4,4},
+            {1,2,2,4,6},
+            {3,3,5,6,6},
+            {3,5,5,6,7},
+            {3,5,6,6,7}};
+    public int mapSide=4;
     public HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
 
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
     }
 
+    public static GameMap getInstance(){
+        if(ISTANCE==null){
+            ISTANCE = new GameMap(5);
+        }
+        return ISTANCE;
+    }
+
     public void createMap(){
         Random rand=new Random();
         for (int i=1;i<mapSide+1;i++){
-            String OP=OPS[rand.nextInt(4)];
-            Block b=new Block(i);
-            b.setOperation(OP);
-            blocks.put(i,b);
+
         }
         System.out.println(mapSide);
         for(int x=0;x<mapSide;x++){
             for(int y=0;y<mapSide;y++){
                 int id=map[x][y];
-                if( blocks.containsKey(id)){
-                    Cell c = blocks.get(id).addCell(x,y);
-                    for(int i=0;i<mapSide+1;i++){
-                        if(c.checkCellUpdate(i)){
-                            c.updateValueCell(i);
-                        }
+                String OP=OPS[rand.nextInt(4)];
+                Block b=new Block(id);
+                b.setOperation(OP);
+                blocks.put(id,b);
+                Cell c = blocks.get(id).addCell(x,y);
+                for(int i=0;i<mapSide+1;i++){
+                    if(c.checkCellUpdate(i)){
+                        c.updateValueCell(i);
                     }
                 }
             }
@@ -52,7 +60,7 @@ public class GameMap {
             frame.revalidate();
             frame.repaint();
             for (Cell c: b.cells) {
-                //c.reset();
+                c.reset();
             }
         }
         String j = Map.save(map,blocks);
@@ -65,7 +73,6 @@ public class GameMap {
     public boolean checkTop(int x,int y){
         if(y>1) {
             int id = map[x][y];
-            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " TOP " + x + " " + (y - 1));
             if (map[x][y - 1] == id ) {
                 return true;
             }
@@ -76,7 +83,6 @@ public class GameMap {
     public boolean checkBottom(int x,int y){
         if(y < mapSide - 1) {
             int id = map[x][y];
-            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " BOTTOM " + x + " " + (y + 1));
             if (map[x][y + 1] == map[x][y] ) {
                 return true;
             }
@@ -87,7 +93,6 @@ public class GameMap {
     public boolean checkLeft(int x,int y){
         if(x>1) {
             int id = map[x][y];
-            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " LEFT " + (x - 1) + " " + y);
             if (map[x - 1][y] == map[x][y]) {
                 return true;
             }
@@ -98,7 +103,6 @@ public class GameMap {
     public boolean checkRight(int x,int y){
         if(x<mapSide-1) {
             int id = map[x][y];
-            //System.out.println("CELL[" + x + "][" + y + "]=" + id + " RIGHT " + (x + 1) + " " + y);
             if (map[x + 1][y] == map[x][y]) {
                 return true;
             }
@@ -113,21 +117,6 @@ public class GameMap {
 
     public JFrame getFrame(){
         return frame;
-    }
-
-    public static GameMap getInstance(int mapSide){
-        if(ISTANCE==null){
-            ISTANCE = new GameMap(mapSide);
-        }
-        return ISTANCE;
-    }
-
-
-    public static GameMap getInstance(){
-        if(ISTANCE==null){
-            ISTANCE = new GameMap(3);
-        }
-        return ISTANCE;
     }
 
 }
