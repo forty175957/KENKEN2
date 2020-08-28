@@ -15,11 +15,11 @@ public class InputBoxPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 int val=new Integer(textfield1.getText());
-                if(!c.block.checkCells(c.x,c.y,val)){
+                if(!c.checkCellUpdate(val)){
                     label.setText("INVALID VALUE");
                 }else{
                     dispose();
-                    c.block.updateValueCell(c.x,c.y,val);
+                    c.updateValueCell(val);
                     GameMap.getInstance().getFrame().getContentPane().revalidate();
                     GameMap.getInstance().getFrame().repaint();
                 }

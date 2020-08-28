@@ -23,9 +23,10 @@ public class GameMap {
 
     public void createMap(){
         Random rand=new Random();
-        for (int i=1;i<5;i++){
+        for (int i=1;i<mapSide+1;i++){
             String OP=OPS[rand.nextInt(4)];
-            Block b= new Block(i,OP, rand.nextInt(10));
+            Block b=new Block(i);
+            b.setOperation(OP);
             blocks.put(i,b);
         }
         System.out.println(mapSide);
@@ -33,8 +34,25 @@ public class GameMap {
             for(int y=0;y<mapSide;y++){
                 int id=map[x][y];
                 if( blocks.containsKey(id)){
-                    blocks.get(id).addCell(x,y);
+                    Cell c = blocks.get(id).addCell(x,y);
+                    for(int i=0;i<mapSide+1;i++){
+                        if(c.checkCellUpdate(i)){
+                            c.updateValueCell(i);
+                        }
+                    }
                 }
+            }
+        }
+        for(int i=1;i<blocks.size()+1;i++){
+            Block b = blocks.get(i);
+            int goal=b.calcResult();
+            b.setResultValue(goal);
+            System.out.println("BLOCK "+b.getId()+" OP:"+b.operation+"="+goal);
+            b.cells.get(0).updateDescription(b.resultValue+" "+b.operation);
+            frame.revalidate();
+            frame.repaint();
+            for (Cell c: b.cells) {
+                //c.reset();
             }
         }
         String j = Map.save(map,blocks);
@@ -110,13 +128,6 @@ public class GameMap {
             ISTANCE = new GameMap(3);
         }
         return ISTANCE;
-    }
-
-    public boolean checkCell(int x,int y,int blockId){
-        if(map[x][y]==blockId){
-            return true;
-        }
-        return false;
     }
 
 }

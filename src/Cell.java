@@ -12,6 +12,7 @@ public class Cell extends JButton {
     Graphics g;
     Container cp;
     Block block;
+    public boolean completed;
 
     public Cell(int x, int y, Block block) {
         this.x = x;
@@ -36,11 +37,10 @@ public class Cell extends JButton {
         this.x = x;
         this.y = y;
         this.description=description+"("+block.getId()+")";
-        //this.n = block.getId();
         this.block = block;
-        setOpaque(true);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         setBorder(emptyBorder);
+        setOpaque(false);
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,10 +50,39 @@ public class Cell extends JButton {
         });
     }
 
+    public void reset(){
+        n=0;
+    }
+
+    public void updateDescription(String description){
+        this.description=description;
+    }
+
+    public boolean checkCellUpdate(int val){
+        if(val>GameMap.getInstance().mapSide) return false;
+        for (Cell c:block.cells) {
+            if(c.x==x && c.n==val) return false;
+            else if(c.y==y && c.n==val) return false;
+        }
+        return true;
+    }
+
+    public void updateValueCell(int val){
+        n=val;
+        block.checkBlock();
+    }
+
+
     @Override
     protected void paintComponent(Graphics g) {
         this.g=g;
+        Rectangle bounds=getBounds();
         Graphics2D g2 = (Graphics2D) g;
+        if(completed){
+            g.setColor(Color.cyan);
+            g.fillRect(0, 0,getWidth(),getHeight());
+        }
+        g.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
         g2.drawString(this.description, 5, 10);
         g2.drawString(new Integer(this.n).toString(),30,30);

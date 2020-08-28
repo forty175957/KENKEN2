@@ -21,8 +21,7 @@ public class TestSwing extends JFrame {
         pack();
         setSize(new Dimension(188, 216));
         setVisible(true);
-        Risolutore.resolve(GameMap.getInstance().blocks);
-        //setExtendedState(JFrame.);
+        //Risolutore Res = new Risolutore(GameMap.getInstance().blocks.get(3));
     }
 
     private class TestCell extends JButton{

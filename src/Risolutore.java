@@ -1,43 +1,50 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+
 
 public class Risolutore {
-    Random rand=new Random();
-    ArrayList<Integer> soluzione=new ArrayList<Integer>();
+    public ArrayList<Cell> sol=new ArrayList<Cell>();
+    private Block block;
 
-    public static void resolve(HashMap<Integer,Block> blocks){
-        for(int i=1;i<blocks.size()+1;i++){
-            Block b =blocks.get(i);
-            System.out.println("BLOCK n "+b.getId());
-            new Risolutore(b);
+    public void solve(Cell start){
+        for(int i=1;i<GameMap.getInstance().mapSide+1;i++){
+             if(start==null){
+                 backtrack();
+                 System.out.println("no empty cell");
+                 break;
+             }
+             if(start.checkCellUpdate(i)){
+                 start.updateValueCell(i);
+                 sol.add(start);
+                 solve(block.findEmpty());
+                 break;
+             }
+             else if(!start.checkCellUpdate(i) && i==GameMap.getInstance().mapSide+1 ){
+                 backtrack();
+                 //nessun valore applicabile, BACKTRACK
+             }
+             if(block.getBlockSize()== sol.size()){
+                 System.out.println("Soluzione trovata :"+sol.toString());
+             }
         }
     }
 
-    public ArrayList<Cell> resolve(Block b){
-        Block mod;
-        for (Cell c: b.cells ) {
-            if(c.n!=0){
-                for(int i=1;i<GameMap.getInstance().mapSide;i++){
-                    boolean check = b.checkCellUpdate(c.x,c.y,i);
-                    if(check){
-                        mod=b.updateValueCell(c.x,c.y,i);
-                    }
-                    else if(!check && i==GameMap.getInstance().mapSide){
-                        backtrack()
-                    }
-                }
-            }
+    private void backtrack(){
+        int r = sol.size();
+        if(r!=0) {
+            System.out.println("R" + r);
+            System.out.println("Soluzione: " + sol.toString());
+            Cell last = sol.remove(r-1);
+            last.updateValueCell(0);
         }
+        solve(block.findEmpty());
     }
 
-    public Risolutore(Block block){
-        /*
-        System.out.println(soluzione.toString());*/
+    public Risolutore(Block b){
+        block=b;
+        sol.clear();
+        Cell empty = block.findEmpty();
+        solve(empty);
     }
 
 
-    public static HashMap<Cell,Integer> backtrack(ArrayList<Cell> solution,Block b){
-
-    }
 }

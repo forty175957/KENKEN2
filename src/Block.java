@@ -8,56 +8,75 @@ public class Block {
     private int blockId;
     private GameMap Gmap=GameMap.getInstance();
 
-    public Block(int blockId,String op,int res) {
+    public Block(int blockId) {
         this.blockId = blockId;
-        this.operation=op;
-        this.resultValue=res;
         this.cells=new ArrayList<Cell>();
-        System.out.println("id:"+blockId+"op:"+op+"res:"+resultValue);
+    }
+
+    public void setOperation(String OP){
+        operation=OP;
+    }
+
+    public void setResultValue(int val){
+        resultValue=val;
+        System.out.println("id:"+blockId+" op:"+operation+" res:"+resultValue);
+    }
+
+    public int getBlockSize(){
+        return cells.size();
     }
 
     public int getId(){
         return blockId;
     }
 
-    public void addCell(int x,int y) {
+    public Cell addCell(int x,int y) {
         Cell cell;
-        if(cells.isEmpty()) {
-            String desc=operation+" "+new Integer(resultValue).toString();
-            cell = new Cell(x,y,this,desc);
-        }else{
         cell = new Cell(x,y,this);
-        }
         cells.add(cell);
         Gmap.getFrame().getContentPane().add(cell);
-    }
-
-    public boolean checkCellUpdate(int x,int y,int val){
-        if(val>GameMap.getInstance().mapSide) return false;
-        for (Cell c:cells) {
-            if(c.x==x && c.n==val) return false;
-            else if(c.y==y && c.n==val) return false;
-        }
-        return true;
-    }
-
-    public Block updateValueCell(int x,int y,int val){
-        Block b = this.clone();
-        for (Cell c:cells) {
-            if(c.x==x && c.y=y)
-                c.n = val;
-        }
-        return b;
+        return  cell;
     }
 
     public void completedBlock(){
         for (Cell c:cells) {
-            c.setBackground(Color.GREEN);
+            c.completed=true;
             c.repaint();
         }
     }
+
+     public Cell findEmpty(){
+        Cell result=null;
+         for (Cell c:cells) {
+            if(c.n==0){
+                result=c;
+                break;
+            }
+         }
+         return result;
+     }
+
+    public Cell getCell(int x,int y){
+        Cell cell=null;
+        for (Cell c:cells) {
+            if(c.x==x && c.y==y) cell=c;
+        }
+        return cell;
+    }
+
     public boolean checkBlock(){
         boolean ret=false;
+        int result=calcResult();
+        System.out.println(result+"  "+resultValue);
+        if(result==resultValue) {
+            ret=true;
+            System.out.println("block "+blockId+" completed!!"+ret);
+            completedBlock();
+        }
+        return ret;
+    }
+
+    public int calcResult(){
         int result=0;
         switch(operation){
             case "+":
@@ -85,13 +104,8 @@ public class Block {
                 }
             break;
         }
-        System.out.println(result+"  "+resultValue);
-        if(result==resultValue) {
-            ret=true;
-            System.out.println("block "+blockId+" completed!!"+ret);
-            completedBlock();
-        }
-        return  ret;
+
+        return  result;
     }
 
 }
