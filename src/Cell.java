@@ -25,10 +25,8 @@ public class Cell extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                block.checkBlock();
                 System.out.println("cell " + new Integer(n).toString() + " pressed");
                 editCellValue();
-                block.checkBlock();
             }
         });
     }
@@ -59,17 +57,20 @@ public class Cell extends JButton {
     }
 
     public boolean checkCellUpdate(int val){
+        boolean flag=true;
         if(val>GameMap.getInstance().mapSide) return false;
         for (Cell c:block.cells) {
-            if(c.x==x && c.n==val) return false;
-            else if(c.y==y && c.n==val) return false;
+            if(c.x==x && c.n==val) flag=false;
+            else if(c.y==y && c.n==val) flag=false;
         }
-        return true;
+        return flag && GameMap.getInstance().checkMatrix(this.x,this.y,val);
     }
 
     public void updateValueCell(int val){
         n=val;
-        block.checkBlock();
+        block.completedBlock(false);
+        GameMap.getInstance().updateMatrix(x,y,val);
+        if(block.checkBlock()) block.completedBlock(true);
     }
 
 

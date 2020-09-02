@@ -13,6 +13,11 @@ public class Block {
         this.cells=new ArrayList<Cell>();
     }
 
+    public void setAll(String OP,int val){
+        operation=OP;
+        resultValue=val;
+    }
+
     public void setOperation(String OP){
         operation=OP;
     }
@@ -38,9 +43,9 @@ public class Block {
         return  cell;
     }
 
-    public void completedBlock(){
+    public void completedBlock(boolean comp){
         for (Cell c:cells) {
-            c.completed=true;
+            c.completed=comp;
             c.repaint();
         }
     }
@@ -65,47 +70,58 @@ public class Block {
     }
 
     public boolean checkBlock(){
-        boolean ret=false;
-        int result=calcResult();
-        System.out.println(result+"  "+resultValue);
-        if(result==resultValue) {
-            ret=true;
-            System.out.println("block "+blockId+" completed!!"+ret);
-            completedBlock();
-        }
-        return ret;
-    }
-
-    public int calcResult(){
         int result=0;
-        switch(operation){
+        switch(operation) {
             case "+":
-                for (Cell c:cells) {
-                    if(result==0) result=c.n;
-                    else result=result+c.n;
+                for (Cell c : cells) {
+                    if (result == 0) result = c.n;
+                    else result = result + c.n;
+                    if (result > resultValue) return false;
+                    if (result == resultValue) {
+                        System.out.println("block " + blockId + " completed!!" + result);
+                        return true;
+                    }
                 }
-            break;
-            case "-":
-                for (Cell c:cells) {
-                    if(result==0) result=c.n;
-                    else result=result-c.n;
-                }
-            break;
+                break;
             case "*":
-                for (Cell c:cells) {
-                    if(result==0) result=c.n;
-                    else result=result*c.n;
+                for (Cell c : cells) {
+                    if (result == 0) result = c.n;
+                    else result = result * c.n;
+                    if (result > resultValue) return false;
+                    if (result == resultValue) {
+                        System.out.println("block " + blockId + " completed!!" + result);
+                        return true;
+                    }
                 }
-            break;
+                break;
+            case "-":
+                for (Cell c : cells) {
+                    result = c.n;
+                    for (Cell c2 : cells) {
+                        if (c!=c2) {
+                            result -= c2.n;
+                        }
+                    }
+                    if (result == resultValue)
+                        System.out.println("block " + blockId + " completed!!" + result);
+                        return true;
+                }
+                break;
             case "/":
-                for (Cell c:cells) {
-                    if(result==0) result=c.n;
-                    else result=result/c.n;
+                for (Cell c : cells) {
+                    result = c.n;
+                    for (Cell c2 : cells) {
+                        if (c.n != c2.n) {
+                            result /= c2.n;
+                        }
+                    }
+                    if (result == resultValue)
+                        System.out.println("block " + blockId + " completed!!" + result);
+                    return true;
                 }
-            break;
+                break;
         }
-
-        return  result;
+        System.out.println(result + "  " + resultValue);
+        return false;
     }
-
 }

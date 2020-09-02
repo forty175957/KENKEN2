@@ -16,7 +16,7 @@ public class TestSwing extends JFrame {
         this.setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         map.setFrame(this);
-        map.createMap();
+        map.init();
         pack();
         setSize(new Dimension(315, 345));
         setVisible(true);
