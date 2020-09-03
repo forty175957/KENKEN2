@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class GameMap {
     private static GameMap ISTANCE;
@@ -12,17 +9,10 @@ public class GameMap {
     private Container cp;
     public int mapSide=5;
     private String[] OPS= {"+","-","/","*"};
-    public int[][] map = {
-            {1,1,2,4,4},
-            {1,2,2,4,6},
-            {3,3,5,6,6},
-            {3,5,5,6,7},
-            {3,5,6,6,7}};
-
-
+    public int[][] map ;
     int[][] valueMatrix=new int[mapSide][mapSide];
-    public HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
 
+    public HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
     }
@@ -31,13 +21,34 @@ public class GameMap {
         return valueMatrix;
     }
 
-    public ArrayList<String> getOperators(){
-        ArrayList<String> op=new ArrayList<String>();
+    public String[] getOperators(){
+        String[] op=new String[blocks.size()];
         for(int i=1;i< blocks.size()+1;i++)
         {
-            op.add(i,blocks.get(i).operation);
+            op[i-1]=blocks.get(i).operation;
         }
         return op;
+    }
+
+    public void setOperator(String[] op){
+        for(int i=1;i< blocks.size()+1;i++) {
+            blocks.get(i).operation=op[i-1];
+        }
+    }
+
+    public void setResult(String[] res){
+        for(int i=1;i< blocks.size()+1;i++) {
+            blocks.get(i).resultValue= Integer.parseInt(res[i-1]);
+        }
+    }
+
+    public String[] getResult(){
+        String[] res=new String[blocks.size()];
+        for(int i=1;i< blocks.size()+1;i++)
+        {
+            res[i-1]=new Integer(blocks.get(i).resultValue).toString();
+        }
+        return res;
     }
     public static GameMap getInstance(){
         if(ISTANCE==null){
@@ -59,7 +70,7 @@ public class GameMap {
 
     public void updateMatrix(int raw,int col,int x){
         valueMatrix[raw][col]=x;
-        System.out.println(Matrix.toString(valueMatrix));
+        System.out.println(Matrix.MatrixToString(valueMatrix));
     }
 
     public void load(String filename){
@@ -68,24 +79,16 @@ public class GameMap {
 
 
     public void init(){
+        MapUtil.load();
         for(int x=0;x<mapSide;x++){
             for(int y=0;y<mapSide;y++){
                 int id=map[x][y];
-                if(!blocks.containsKey(id)){
-                    Block b=new Block(id);
-                    blocks.put(id,b);
-                }
                 Cell c = blocks.get(id).addCell(x,y);
                 }
             }
 
-        blocks.get(1).setAll("-",-4);
-        blocks.get(2).setAll("*",15);
-        blocks.get(3).setAll("+",12);
-        blocks.get(4).setAll("*",40);
-        blocks.get(5).setAll("+",16);
-        blocks.get(6).setAll("*",360);
-        blocks.get(7).setAll("-",1);
+        //MapUtil.save();
+
 
         for (int i=1;i< blocks.size()+1;i++) {
             System.out.println("block "+i+" op"+blocks.get(i).operation+" res: "+blocks.get(i).resultValue);
@@ -94,6 +97,8 @@ public class GameMap {
                 c.reset();
             }
         }
+        String jsonString=MapUtil.save();
+        System.out.println(jsonString);
     }
 
     public boolean checkTop(int x,int y){

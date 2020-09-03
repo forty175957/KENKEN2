@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Matrix {
-    public static String toString(int[][] matrix)
+    public static String MatrixToString(int[][] matrix)
     {
         StringBuilder sbResult = new StringBuilder();
         int size=matrix[0].length;
@@ -18,7 +18,7 @@ public class Matrix {
         return sbResult.toString();
     }
 
-    public  static int[][] toMatrix(String s,int size){
+    public  static int[][] StringtoMatrix(String s,int size){
         Scanner sc=new Scanner(s);
         int[][] matrix=new int[size][size];
         //String line = sc.nextLine();
@@ -29,5 +29,18 @@ public class Matrix {
             }
         }
         return  matrix;
+    }
+
+    public  static String[] StringToList(String s){
+        String[] line=s.split("\t");
+        return line;
+    }
+
+    public  static String ListToString(String[] json){
+        String line="";
+        for (String x:json) {
+            line+=x+"\t";
+        }
+        return  line;
     }
 }
