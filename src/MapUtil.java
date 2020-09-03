@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Scanner;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
