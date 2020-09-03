@@ -42,7 +42,6 @@ public class GameMap {
             System.out.println("block " + i + " op" + blocks.get(i).operation + " res: " + blocks.get(i).resultValue);
             String description=blocks.get(i).operation + " " + new Integer(blocks.get(i).resultValue);
             for (Cell c : blocks.get(i).cells) {
-                c.updateDescription(description);
                 c.reset();
             }
         }
@@ -110,7 +109,7 @@ public class GameMap {
     }
 
     public void updateBlocks(String [] op,String[] res){
-        for (int i = 1; i < op.length - 1; i++) {
+        for (int i = 0; i < op.length; i++) {
             Block b=new Block(i+1);
             b.setAll(op[i],Integer.parseInt(res[i]));
             GameMap.getInstance().blocks.put(i+1,b);

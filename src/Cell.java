@@ -17,7 +17,9 @@ public class Cell extends JButton {
     public Cell(int x, int y, Block block) {
         this.x = x;
         this.y = y;
-        this.description="("+block.getId()+")";
+        if(block.cells.isEmpty()) {
+            this.description = block.operation + " " + new Integer(block.resultValue).toString() ;
+        }
         this.block = block;
         Border emptyBorder = BorderFactory.createEmptyBorder();
         setBorder(emptyBorder);
