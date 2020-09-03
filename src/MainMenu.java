@@ -46,7 +46,10 @@ public class MainMenu extends JFrame {
         resetBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                for (int i=1;i<6;i++){
+                    for (Cell c:GameMap.getInstance().blocks.get(i).cells) {
+                        c.reset();
+                    }
                 }
             }
         });
