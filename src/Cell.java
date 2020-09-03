@@ -24,9 +24,6 @@ public class Cell extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(n!=0) {
-                    System.out.println("cell " + new Integer(n).toString() + " pressed");
-                }
                 editCellValue();
             }
         });
@@ -54,6 +51,8 @@ public class Cell extends JButton {
 
     public void updateDescription(String description){
         this.description=description;
+        revalidate();
+        repaint();
     }
 
     public boolean checkCellUpdate(int val){

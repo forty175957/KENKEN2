@@ -22,15 +22,20 @@ public class MapUtil {
             GameMap.getInstance().setResult(res);
             String[] op = Matrix.StringToList((String) data.get("operators"));
             GameMap.getInstance().setOperator(op);
-            for (int i = 1; i < op.length + 1; i++) {
-                Block b=new Block(i);
-                b.setAll(op[i - 1],Integer.parseInt(res[i-1]));
-                GameMap.getInstance().blocks.put(i,b);
-            }
+
+            //inizializzo GameMap
+            new KenKenMap(5,5);
+            GameMap.getInstance().updateBlocks(op,res);
+            GameMap.getInstance().initGmap();
+
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
     }
+
+
 
     public static String save() {
         JSONObject obj = new JSONObject();
@@ -65,6 +70,8 @@ public class MapUtil {
             while((text=inStream.readLine()) != null){
                 s+=text;
             }
+            System.out.println(s);
+            System.out.println("---------------------");
 
         }catch (FileNotFoundException e){
             e.printStackTrace();

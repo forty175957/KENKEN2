@@ -11,12 +11,53 @@ public class GameMap {
     private String[] OPS= {"+","-","/","*"};
     public int[][] map ;
     int[][] valueMatrix=new int[mapSide][mapSide];
-
     public HashMap<Integer,Block> blocks = new HashMap<Integer, Block>();
+
+
     private GameMap(int mapSide) {
         this.mapSide=mapSide;
     }
 
+    public static GameMap getInstance(){
+        if(ISTANCE==null){
+            ISTANCE = new GameMap(5);
+        }
+        return ISTANCE;
+    }
+
+    public void initGmap(){
+        for(int x=0;x<mapSide;x++) {
+            for (int y = 0; y < mapSide; y++) {
+                int id = map[x][y];
+                Block b = null;
+                if (blocks.containsKey(id)) {
+                    b = blocks.get(id);
+                } else {
+                    b = new Block(id);
+                }
+                b.addCell(x, y);
+            }
+        }
+        for (int i=1;i< blocks.size()+1;i++) {
+            System.out.println("block " + i + " op" + blocks.get(i).operation + " res: " + blocks.get(i).resultValue);
+            String description=blocks.get(i).operation + " " + new Integer(blocks.get(i).resultValue);
+            for (Cell c : blocks.get(i).cells) {
+                c.updateDescription(description);
+                c.reset();
+            }
+        }
+    }
+
+    public void setFrame(JFrame f){
+        frame=f;
+        cp=f.getContentPane();
+    }
+
+    public JFrame getFrame(){
+        return frame;
+    }
+
+//##MAP ADAPTER
     public int[][] getValues() {
         return valueMatrix;
     }
@@ -50,13 +91,13 @@ public class GameMap {
         }
         return res;
     }
-    public static GameMap getInstance(){
-        if(ISTANCE==null){
-            ISTANCE = new GameMap(5);
-        }
-        return ISTANCE;
+
+    public void updateMatrix(int raw,int col,int x){
+        valueMatrix[raw][col]=x;
+        System.out.println(Matrix.MatrixToString(valueMatrix));
     }
 
+//##MAP CONTROL
     public boolean checkMatrix(int row,int col,int x){
         for(int i=0;i<mapSide;i++){
             if(valueMatrix[row][i]==x){
@@ -68,37 +109,12 @@ public class GameMap {
         return true;
     }
 
-    public void updateMatrix(int raw,int col,int x){
-        valueMatrix[raw][col]=x;
-        System.out.println(Matrix.MatrixToString(valueMatrix));
-    }
-
-    public void load(String filename){
-
-    }
-
-
-    public void init(){
-        MapUtil.load();
-        for(int x=0;x<mapSide;x++){
-            for(int y=0;y<mapSide;y++){
-                int id=map[x][y];
-                Cell c = blocks.get(id).addCell(x,y);
-                }
-            }
-
-        //MapUtil.save();
-
-
-        for (int i=1;i< blocks.size()+1;i++) {
-            System.out.println("block "+i+" op"+blocks.get(i).operation+" res: "+blocks.get(i).resultValue);
-            blocks.get(i).cells.get(0).updateDescription(blocks.get(i).operation+" "+new Integer(blocks.get(i).resultValue));
-            for (Cell c:blocks.get(i).cells) {
-                c.reset();
-            }
+    public void updateBlocks(String [] op,String[] res){
+        for (int i = 1; i < op.length - 1; i++) {
+            Block b=new Block(i+1);
+            b.setAll(op[i],Integer.parseInt(res[i]));
+            GameMap.getInstance().blocks.put(i+1,b);
         }
-        String jsonString=MapUtil.save();
-        System.out.println(jsonString);
     }
 
     public boolean checkTop(int x,int y){
@@ -140,15 +156,5 @@ public class GameMap {
         }
         return false;
     }
-
-    public void setFrame(JFrame f){
-        frame=f;
-        cp=f.getContentPane();
-    }
-
-    public JFrame getFrame(){
-        return frame;
-    }
-
 
 }
