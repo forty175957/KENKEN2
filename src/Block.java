@@ -6,76 +6,76 @@ public class Block {
     public String operation;
     public int resultValue;
     private int blockId;
-    private GameMap Gmap=GameMap.getInstance();
+    private GameMap Gmap = GameMap.getInstance();
 
     public Block(int blockId) {
         this.blockId = blockId;
-        this.cells=new ArrayList<Cell>();
+        this.cells = new ArrayList<Cell>();
     }
 
-    public void setAll(String OP,int val){
-        operation=OP;
-        resultValue=val;
+    public void setAll(String OP, int val) {
+        operation = OP;
+        resultValue = val;
     }
 
-    public void setOperation(String OP){
-        operation=OP;
+    public void setOperation(String OP) {
+        operation = OP;
     }
 
-    public void setResultValue(int val){
-        resultValue=val;
-        System.out.println("id:"+blockId+" op:"+operation+" res:"+resultValue);
+    public void setResultValue(int val) {
+        resultValue = val;
+        System.out.println("id:" + blockId + " op:" + operation + " res:" + resultValue);
     }
 
-    public int getBlockSize(){
+    public int getBlockSize() {
         return cells.size();
     }
 
-    public int getId(){
+    public int getId() {
         return blockId;
     }
 
-    public Cell addCell(int x,int y) {
+    public Cell addCell(int x, int y) {
         Cell cell;
-        cell = new Cell(x,y,this);
+        cell = new Cell(x, y, this);
         cells.add(cell);
         Gmap.getFrame().getContentPane().add(cell);
-        return  cell;
+        return cell;
     }
 
-    public void completedBlock(boolean comp){
-        for (Cell c:cells) {
-            c.completed=comp;
+    public void completedBlock(boolean comp) {
+        for (Cell c : cells) {
+            c.completed = comp;
             c.repaint();
         }
     }
 
-     public Cell findEmpty(){
-        Cell result=null;
-         for (Cell c:cells) {
-            if(c.n==0){
-                result=c;
+    public Cell findEmpty() {
+        Cell result = null;
+        for (Cell c : cells) {
+            if (c.n == 0) {
+                result = c;
                 break;
             }
-         }
-         return result;
-     }
+        }
+        return result;
+    }
 
-    public Cell getCell(int x,int y){
-        Cell cell=null;
-        for (Cell c:cells) {
-            if(c.x==x && c.y==y) cell=c;
+    public Cell getCell(int x, int y) {
+        Cell cell = null;
+        for (Cell c : cells) {
+            if (c.x == x && c.y == y) cell = c;
         }
         return cell;
     }
 
-    public boolean checkBlock(){
-        int result=0;
+    public boolean checkBlock() {
+        int result = 0;
 
-        switch(operation) {
+        switch (operation) {
             case "+":
                 for (Cell c : cells) {
-                    if (result == 0) result = c.n;
+                    if (!(result == 0)) result = c.n;
                     else result = result + c.n;
                     if (result > resultValue) return false;
                     if (result == resultValue) {
@@ -83,27 +83,27 @@ public class Block {
                         return true;
                     }
                 }
-            break;
+                break;
             case "*":
-            for (Cell c : cells) {
-                if(c.n==0) {
-                    result=0;
-                    return false;
-                }
-                if (result == 0) result = c.n;
-                else result = result * c.n;
-                if (result > resultValue) return false;
-                if (result == resultValue) {
-                    System.out.println("block " + blockId + " completed!!" + result);
-                    return true;
+                for (Cell c : cells) {
+                    if (c.n == 0) {
+                        result = 0;
+                        return false;
+                    }
+                    if (result == 0) result = c.n;
+                    else result = result * c.n;
+                    if (result > resultValue) return false;
+                    if (result == resultValue) {
+                        System.out.println("block " + blockId + " completed!!" + result);
+                        return true;
                     }
 
                 }
-            break;
+                break;
             case "-":
                 for (Cell c : cells) {
-                    if(c.n!=0) {
-                            result = c.n;
+                    if (c.n != 0) {
+                        result = c.n;
                         for (Cell c2 : cells) {
                             if (c != c2) {
                                 result -= c2.n;
@@ -115,10 +115,10 @@ public class Block {
                         }
                     }
                 }
-            break;
+                break;
             case "/":
                 for (Cell c : cells) {
-                    if(c.n!=0) {
+                    if (c.n != 0) {
                         result = c.n;
                         for (Cell c2 : cells) {
                             if (c.n != c2.n) {
@@ -131,9 +131,89 @@ public class Block {
                         }
                     }
                 }
-            break;
+                break;
         }
         System.out.println(result + "  " + resultValue);
         return false;
     }
 }
+
+
+/* public boolean checkBlockMio(){
+        int result=0;
+        int index =0;
+
+        switch(operation) {
+            case "+":
+                for (Cell c : cells) {
+                    index+=1;
+                    if (!(c.n == 0)) {
+                        result = result + c.n;
+                        if (result > resultValue) return false;
+                        if (result == resultValue && index==cells.size()) {
+                            System.out.println("block " + blockId + " completed!!" + result);
+                            return true;
+                        }
+                    }
+                }
+                index=0;
+                break;
+            case "*":
+                for (Cell c : cells) {
+                    index+=1;
+                    if(c.n==0) {
+                        result=0;
+                        return false;
+                    }
+                    if (result == 0) result = c.n;
+                    else result = result * c.n;
+                    if (result > resultValue) return false;
+                    if (result == resultValue && index==cells.size()) {
+                        System.out.println("block " + blockId + " completed!!" + result);
+                        return true;
+                    }
+
+                }
+                index=0;
+                break;
+            case "-":
+                for (Cell c : cells) {
+                    index+=1;
+                    if(c.n!=0) {
+                        result = c.n;
+                        for (Cell c2 : cells) {
+                            if (c != c2) {
+                                result -= c2.n;
+                            }
+                        }
+                        if (result == resultValue && index==cells.size()) {
+                            System.out.println("block " + blockId + " completed!!" + result);
+                            return true;
+                        }
+                    }
+                }
+                index=0;
+                break;
+            case "/":
+                for (Cell c : cells) {
+                    index+=1;
+                    if(c.n!=0) {
+                        result = c.n;
+                        for (Cell c2 : cells) {
+                            if (c.n != c2.n) {
+                                result /= c2.n;
+                            }
+                        }
+                        if (result == resultValue && index==cells.size()) {
+                            System.out.println("block " + blockId + " completed!!" + result);
+                            return true;
+                        }
+                    }
+                }
+                index=0;
+                break;
+        }
+        System.out.println(result + "  " + resultValue);
+        return false;
+    }
+ */

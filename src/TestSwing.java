@@ -15,6 +15,7 @@ public class TestSwing extends JFrame {
         cp.setLayout(new GridLayout(map.mapSide,map.mapSide));
         this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        new  MainMenu();
         map.setFrame(this);
         map.init();
         pack();

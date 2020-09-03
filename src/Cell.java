@@ -58,16 +58,16 @@ public class Cell extends JButton {
 
     public boolean checkCellUpdate(int val){
         boolean flag=true;
-        if(val>GameMap.getInstance().mapSide) return false;
+        if(val>GameMap.getInstance().mapSide+1) return false;
         for (Cell c:block.cells) {
-            if(c.x==x && c.n==val) flag=false;
-            else if(c.y==y && c.n==val) flag=false;
+            if(c.x==this.x && c.n==val) flag=false;
+            else if(c.y==this.y && c.n==val) flag=false;
         }
         return flag && GameMap.getInstance().checkMatrix(this.x,this.y,val);
     }
 
     public void updateValueCell(int val){
-        n=val;
+        this.n=val;
         GameMap.getInstance().updateMatrix(x,y,val);
         block.completedBlock(block.checkBlock());
     }
