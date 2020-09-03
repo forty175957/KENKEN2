@@ -13,7 +13,7 @@ public class TestSwing extends JFrame {
         super("KENKEN-MAP");
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(map.mapSide,map.mapSide));
-        this.setResizable(true);
+        this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         map.setFrame(this);
         map.init();

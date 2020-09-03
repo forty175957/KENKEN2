@@ -17,7 +17,6 @@ public class Cell extends JButton {
     public Cell(int x, int y, Block block) {
         this.x = x;
         this.y = y;
-        //this.n = block.getId();
         this.description="("+block.getId()+")";
         this.block = block;
         Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -25,7 +24,9 @@ public class Cell extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("cell " + new Integer(n).toString() + " pressed");
+                if(n!=0) {
+                    System.out.println("cell " + new Integer(n).toString() + " pressed");
+                }
                 editCellValue();
             }
         });
@@ -42,7 +43,6 @@ public class Cell extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("cell " + new Integer(n).toString() + " pressed");
                 editCellValue();
             }
         });
@@ -85,7 +85,10 @@ public class Cell extends JButton {
         g.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
         g2.drawString(this.description, 5, 10);
-        g2.drawString(new Integer(this.n).toString(),30,30);
+        if(n!=0) {
+            g2.drawString(new Integer(this.n).toString(),30,30);
+        }
+
         drawBorder(g2);
     }
 
