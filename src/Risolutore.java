@@ -5,28 +5,35 @@ public class Risolutore {
         private Block block;
         private ArrayList<Integer> excluded = new ArrayList<>();
 
-        public boolean solve() {
-            Cell empty = block.findEmpty();
+        public boolean solve(Cell empty) {
+            if (block.checkBlock()) {
+                return true;
+            }
             if (empty != null) {
-                for (int i = 0; i < GameMap.getInstance().mapSide + 1; i++) {
+                for (int i = 1; i < GameMap.getInstance().mapSide+1; i++) {
                     if (empty.checkCellUpdate(i)) {
                         empty.updateValueCell(i);
-                        if (solve() && block.checkBlock()) {
+                        if (solve(empty)) {
                             return true;
-                        }else {
+                        }
+                        empty.reset();
+                        if (i == GameMap.getInstance().mapSide) {
+                            empty.updateValueCell(1);
                             empty.reset();
-                            return  false;
+                            Cell c = block.findEmpty();
+                            solve(c);
+                            return false;
                         }
                     }
                 }
             }
-            return true;
+            return false;
         }
 
         public Risolutore(Block b) {
             block = b;
             sol.clear();
-            solve();
+            solve(block.findEmpty());
         }
 
 

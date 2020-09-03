@@ -38,21 +38,16 @@ public class GameMap {
                 b.addCell(x, y);
             }
         }
-        for (int i=1;i< blocks.size()+1;i++) {
-            System.out.println("block " + i + " op" + blocks.get(i).operation + " res: " + blocks.get(i).resultValue);
-            String description=blocks.get(i).operation + " " + new Integer(blocks.get(i).resultValue);
-            for (Cell c : blocks.get(i).cells) {
-                c.reset();
-            }
-        }
+        resetMap();
     }
 
 
     public void resetMap() {
         for (int i=1;i< blocks.size()+1;i++) {
-
             for (Cell c : blocks.get(i).cells) {
                 c.reset();
+                c.revalidate();
+                c.repaint();
             }
         }
     }

@@ -48,7 +48,7 @@ public class Cell extends JButton {
     }
 
     public void reset(){
-        n=0;
+        updateValueCell(0);
     }
 
     public void updateDescription(String description){
@@ -71,6 +71,7 @@ public class Cell extends JButton {
         this.n=val;
         GameMap.getInstance().updateMatrix(x,y,val);
         block.completedBlock(block.checkBlock());
+        repaint();
     }
 
 
@@ -79,8 +80,11 @@ public class Cell extends JButton {
         this.g=g;
         Rectangle bounds=getBounds();
         Graphics2D g2 = (Graphics2D) g;
-        if(completed){
+        if(block.checkBlock()){
             g.setColor(Color.cyan);
+            g.fillRect(0, 0,getWidth(),getHeight());
+        }else{
+            g.setColor(Color.white);
             g.fillRect(0, 0,getWidth(),getHeight());
         }
         g.setColor(Color.BLACK);
