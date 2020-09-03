@@ -12,13 +12,12 @@ public class MainMenu extends JFrame {
         this.setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
-        setSize(new Dimension(600, 70));
+        setSize(new Dimension(600, 300));
         setVisible(true);
         JButton newBt=new JButton("NEW");
         JButton loadBt=new JButton("LOAD");
         JButton saveBt=new JButton("SAVE");
         JButton exitBt=new JButton("EXIT");
-        JButton resetBt=new JButton("RESET MAP");
         newBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,21 +42,9 @@ public class MainMenu extends JFrame {
                 System.exit(0);
             }
         });
-        resetBt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                for (int i=1;i<GameMap.getInstance().mapSide+1;i++){
-                    for (Cell c:GameMap.getInstance().blocks.get(i).cells) {
-                        c.reset();
-                    }
-                }
-            }
-        });
         cp.add(newBt);
         cp.add(loadBt);
         cp.add(saveBt);
         cp.add(exitBt);
-        cp.add(resetBt);
-
     }
 }
