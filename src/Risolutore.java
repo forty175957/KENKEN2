@@ -8,16 +8,25 @@ public class Risolutore {
 
     public void solve(Block b,ArrayList<Integer> excluded){
         Cell c = b.findEmpty();
-        while (!block.checkBlock()){
-            for (int i=1;i<GameMap.getInstance().mapSide+1;i++){
-                if(c.checkCellUpdate(i) && !excluded.contains(i)){
-                    c.updateValueCell(i);
+        if(c!=null) {
+            while (!block.checkBlock()) {
+                for (int i = 1; i < GameMap.getInstance().mapSide + 1; i++) {
+                    if (c.checkCellUpdate(i) && !excluded.contains(i)) {
+                        c.updateValueCell(i);
+                        c = b.findEmpty();
+                    }
+                    if (i == GameMap.getInstance().mapSide) {
+                        backtrack(b, excluded);
+                    }
                 }
-                if(i==GameMap.getInstance().mapSide){
-                    backtrack(b,excluded);
-                }
+                c = b.findEmpty();
             }
-            c= b.findEmpty();
+        }
+        else{
+            for(Cell ce : b.cells)
+            {
+
+            }
         }
     }
 
