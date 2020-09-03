@@ -29,6 +29,7 @@ public class Risolutore {
             }
         }
     }
+    ///FORTUNATO È UN CAZZONE!!!
 
     private void backtrack(Block b,ArrayList<Integer> excluded){
         int r = sol.size();
