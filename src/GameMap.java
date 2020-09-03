@@ -47,6 +47,15 @@ public class GameMap {
         }
     }
 
+
+    public void resetMap() {
+        for (int i=1;i< blocks.size()+1;i++) {
+
+            for (Cell c : blocks.get(i).cells) {
+                c.reset();
+            }
+        }
+    }
     public void setFrame(JFrame f){
         frame=f;
         cp=f.getContentPane();
