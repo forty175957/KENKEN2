@@ -57,8 +57,6 @@ public class InputBoxPanel extends JFrame implements KeyListener{
     }
 
     public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("KEYTYPED -> KeyChar : " + keyEvent.getKeyChar() +
-                "  KeyCode : " + keyEvent.getKeyCode());
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
             int val = new Integer(textfield1.getText());
             if (!c.checkCellUpdate(val)) {
@@ -73,17 +71,7 @@ public class InputBoxPanel extends JFrame implements KeyListener{
     }
 
     public void keyTyped(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            int val = new Integer(textfield1.getText());
-            if (!c.checkCellUpdate(val)) {
-                label.setText("INVALID VALUE");
-            } else {
-                dispose();
-                c.updateValueCell(val);
-                GameMap.getInstance().getFrame().getContentPane().revalidate();
-                GameMap.getInstance().getFrame().repaint();
-            }
-        }
+
     }
 
 }

@@ -18,7 +18,7 @@ public class TestSwing extends JFrame {
         map.setFrame(this);
         map.init();
         pack();
-        setSize(new Dimension(315, 345));
+        setSize(new Dimension(310, 340));
         setVisible(true);
         //Risolutore Res = new Risolutore(GameMap.getInstance().blocks.get(3));
     }

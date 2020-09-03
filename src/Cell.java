@@ -94,26 +94,26 @@ public class Cell extends JButton {
     }
 
     private void drawBorder(Graphics2D g2) {
-        if (y == 0) {//TOP
+        if (x == 0) {//TOP
             g2.setStroke(new BasicStroke(4));
             g2.drawLine(0, 0, 60, 0);
         }
         //BOTTOM
         if (map.checkBottom(x, y) && y != map.mapSide) {
-            g2.setStroke(new BasicStroke(2));
+            g2.setStroke(new BasicStroke(1));
         } else {
             g2.setStroke(new BasicStroke(4));
         }
         g2.drawLine(60, 0, 60, 60);
         //RIGHT
         if (map.checkRight(x, y) && x != map.mapSide && y != map.mapSide) {
-            g2.setStroke(new BasicStroke(2));
+            g2.setStroke(new BasicStroke(1));
         } else {
             g2.setStroke(new BasicStroke(4));
         }
         g2.drawLine(60, 60, 0, 60);
         //LEFT
-        if (x == 0) {
+        if (y == 0) {
             g2.setStroke(new BasicStroke(4));
             g2.drawLine(0, 60, 0, 0);
         }
