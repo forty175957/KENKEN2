@@ -84,7 +84,7 @@ public class GameMap {
         blocks.get(3).setAll("+",12);
         blocks.get(4).setAll("*",40);
         blocks.get(5).setAll("+",16);
-        blocks.get(6).setAll("*",3);
+        blocks.get(6).setAll("*",360);
         blocks.get(7).setAll("-",1);
 
         for (int i=1;i< blocks.size()+1;i++) {

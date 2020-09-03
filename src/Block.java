@@ -71,6 +71,7 @@ public class Block {
 
     public boolean checkBlock(){
         int result=0;
+
         switch(operation) {
             case "+":
                 for (Cell c : cells) {
@@ -82,44 +83,55 @@ public class Block {
                         return true;
                     }
                 }
-                break;
+            break;
             case "*":
-                for (Cell c : cells) {
-                    if (result == 0) result = c.n;
-                    else result = result * c.n;
-                    if (result > resultValue) return false;
-                    if (result == resultValue) {
-                        System.out.println("block " + blockId + " completed!!" + result);
-                        return true;
-                    }
+            for (Cell c : cells) {
+                if(c.n==0) {
+                    result=0;
+                    return false;
                 }
-                break;
+                if (result == 0) result = c.n;
+                else result = result * c.n;
+                if (result > resultValue) return false;
+                if (result == resultValue) {
+                    System.out.println("block " + blockId + " completed!!" + result);
+                    return true;
+                    }
+
+                }
+            break;
             case "-":
                 for (Cell c : cells) {
-                    result = c.n;
-                    for (Cell c2 : cells) {
-                        if (c!=c2) {
-                            result -= c2.n;
+                    if(c.n!=0) {
+                            result = c.n;
+                        for (Cell c2 : cells) {
+                            if (c != c2) {
+                                result -= c2.n;
+                            }
+                        }
+                        if (result == resultValue) {
+                            System.out.println("block " + blockId + " completed!!" + result);
+                            return true;
                         }
                     }
-                    if (result == resultValue)
-                        System.out.println("block " + blockId + " completed!!" + result);
-                        return true;
                 }
-                break;
+            break;
             case "/":
                 for (Cell c : cells) {
-                    result = c.n;
-                    for (Cell c2 : cells) {
-                        if (c.n != c2.n) {
-                            result /= c2.n;
+                    if(c.n!=0) {
+                        result = c.n;
+                        for (Cell c2 : cells) {
+                            if (c.n != c2.n) {
+                                result /= c2.n;
+                            }
+                        }
+                        if (result == resultValue) {
+                            System.out.println("block " + blockId + " completed!!" + result);
+                            return true;
                         }
                     }
-                    if (result == resultValue)
-                        System.out.println("block " + blockId + " completed!!" + result);
-                    return true;
                 }
-                break;
+            break;
         }
         System.out.println(result + "  " + resultValue);
         return false;

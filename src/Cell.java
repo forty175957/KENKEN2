@@ -68,9 +68,8 @@ public class Cell extends JButton {
 
     public void updateValueCell(int val){
         n=val;
-        block.completedBlock(false);
         GameMap.getInstance().updateMatrix(x,y,val);
-        if(block.checkBlock()) block.completedBlock(true);
+        block.completedBlock(block.checkBlock());
     }
 
 
