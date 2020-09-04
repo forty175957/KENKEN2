@@ -102,7 +102,7 @@ public class GameMap {
 
     public void updateMatrix(int raw,int col,int x){
         valueMatrix[raw][col]=x;
-        System.out.println(Matrix.MatrixToString(valueMatrix));
+        //System.out.println(Matrix.MatrixToString(valueMatrix));
     }
 
 //##MAP CONTROL
