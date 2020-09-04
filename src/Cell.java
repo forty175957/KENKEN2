@@ -47,6 +47,22 @@ public class Cell extends JButton {
         });
     }
 
+    public Cell(Cell c) {
+        this.x = c.x;
+        this.y = c.y;
+        this.description=c.description;
+        this.block = c.block;
+        Border emptyBorder = BorderFactory.createEmptyBorder();
+        setBorder(emptyBorder);
+        setOpaque(false);
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editCellValue();
+            }
+        });
+    }
+
     public void reset(){
         updateValueCell(0);
     }
