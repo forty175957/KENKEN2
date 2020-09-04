@@ -74,10 +74,11 @@ public class Risolutore {
         }
     }
 
-    public void RisolviMappa() {
+    /*public void RisolviMappa() {
         for (int i = 1; i <= GameMap.getInstance().blocks.size(); i++) {
             Block bl = GameMap.getInstance().blocks.get(i);
+            for()
 
         }
-    }
+    }*/
 }
