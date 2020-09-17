@@ -38,13 +38,10 @@ public class RisolutoreMio {
     public RisolutoreMio(Block b) {
         block = b;
         sol.clear();
-        int index =0;
-        //solveMod2();
-        //RisolviMappa();
         solution2();
-        System.out.println(solutionMap.size());
         for(int[][] stampaSol : solutionMap) System.out.println(Matrix.MatrixToString(stampaSol));
-        mapIllustration();
+        //mapIllustration();
+        new RisolutoreGui(solutionMap);
     }
 
     public boolean solve() {
@@ -215,8 +212,6 @@ public class RisolutoreMio {
         if (bloc != null) {
             solveMod(bloc);
             if(bloc.checkBlock() && bloc.getId()==GameMap.getInstance().blocks.size()){
-                System.out.println("Soluzione trovata !");
-                //System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
                 int[][] m = cloneArray(GameMap.getInstance().valueMatrix);
                 solutionMap.add(m);
             }

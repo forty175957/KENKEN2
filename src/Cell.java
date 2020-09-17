@@ -90,7 +90,9 @@ public class Cell extends JButton {
         repaint();
     }
 
-
+    public void update(){
+        n=GameMap.getInstance().valueMatrix[x][y];
+    }
     @Override
     protected void paintComponent(Graphics g) {
         this.g=g;

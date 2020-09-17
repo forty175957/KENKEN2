@@ -74,6 +74,15 @@ public class GameMap {
         return op;
     }
 
+    public void updateMap(){
+        for (int i=1;i<blocks.size()+1;i++) {
+            for (Cell c:blocks.get(i).cells) {
+                c.update();
+            }
+        }
+        frame.repaint();
+    }
+
     public void setOperator(String[] op) {
         for (int i = 1; i < blocks.size() + 1; i++) {
             blocks.get(i).operation = op[i - 1];
