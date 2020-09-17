@@ -10,7 +10,7 @@ public class Generatore {
         mat=new int[side][side];
         this.side=side;
         Random rand=new Random();
-        updateCell(0,0);
+        updateCell(0,0,0);
     }
 
     public boolean checkMatrix(int row, int col, int x) {
@@ -24,24 +24,22 @@ public class Generatore {
         return true;
     }
 
-    private void updateCell(int x,int y) {
-        if (mat[side-1][side-1] == 0) {
-            int n = rand.nextInt(side + 1);
-            if (checkMatrix(x, y, n)) {
-                mat[x][y] = n;
-                System.out.println(Matrix.MatrixToString(mat));
-                if (y < side - 1) {
-                    y++;
-                } else if (y == side - 1) {
-                    x++;
-                    y = 0;
-                }
-                updateCell(x, y);
-            } else {
-                updateCell(x, y);
+    private void updateCell2(int x,int y,int excluded){
+        int n=rand.nextInt(side+1);
+        while(checkMatrix(x,y,n) && n!=excluded) {
+            mat[x][y] = n;
+            System.out.println(Matrix.MatrixToString(mat));
+            if (y < side - 1) {
+                y++;
+            } else if (y == side - 1) {
+                x++;
+                y = 0;
             }
+            else if(x==side-1 && y==side-1) return;
+            updateCell2(x, y,0);
+        }else{
+            updateCell2(x,y);
         }
-        return;
     }
 
     public static  void main(String[] args){
