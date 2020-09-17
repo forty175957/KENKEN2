@@ -13,14 +13,25 @@ public class Generatore {
         updateCell(0,0);
     }
 
+    public boolean checkMatrix(int row, int col, int x) {
+        for (int i = 0; i < side; i++) {
+            if (mat[row][i] == x) {
+                return false;//NOT VALID UPDATE COL
+            } else if (mat[i][col] == x) {
+                return false;//NOT VALID UPDATE ROW
+            }
+        }
+        return true;
+    }
+
     private void updateCell(int x,int y){
         //int n=rand.nextInt(side+1);
         mat[x][y]=3;
         System.out.println(Matrix.MatrixToString(mat));
-        if(x<side-1){
+        if(y<side-1){
             y++;
         }
-        else if(x==side-1){
+        else if(y==side-1){
             x++;y=0;
         }
         updateCell(x,y);
