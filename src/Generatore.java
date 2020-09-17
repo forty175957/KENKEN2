@@ -3,24 +3,32 @@ import java.util.Random;
 
 public class Generatore {
     Random rand=new Random();
-    ArrayList<Integer> soluzione=new ArrayList<Integer>();
+    int side;
+    GameMap map;
 
     public Generatore(int side) {
-    int[][] matrix= new int[side][side];
-    int nEl=side*side;
-    int id=1;int r=0;int c=0;
-    int n=rand.nextInt(5);
-    while(n>0){
-        if(matrix[r][c]==0){
-            matrix[r][c]=id;
+        map=GameMap.getInstance(side);
+        this.side=side;
+        Random rand=new Random();
+        updateCell(0,0);
+    }
+
+    private void updateCell(int x,int y){
+        //int n=rand.nextInt(side+1);
+        map.valueMatrix[x][y]=3;
+        if(x<side-1){
+            updateCell(x++,y);
+            return;
         }
-        else{
-            if(rand.nextBoolean()){
-                r++;
-            }else{
-                c++;
-            }
+        else if(x==side-1){
+            updateCell(0,y++);
+            return;
         }
     }
+
+    public static  void main(String[] args){
+        Generatore g=new Generatore(4);
+        System.out.println(Matrix.MatrixToString(g.map.valueMatrix));
+
     }
 }

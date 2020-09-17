@@ -10,17 +10,25 @@ public class GameMap {
     public int mapSide = 5;
     private String[] OPS = {"+", "-", "/", "*"};
     public int[][] map;
-    int[][] valueMatrix = new int[mapSide][mapSide];
+    public int[][] valueMatrix;
     public HashMap<Integer, Block> blocks = new HashMap<Integer, Block>();
 
 
     private GameMap(int mapSide) {
         this.mapSide = mapSide;
+        valueMatrix = new int[mapSide][mapSide];
     }
 
     public static GameMap getInstance() {
         if (ISTANCE == null) {
             ISTANCE = new GameMap(5);
+        }
+        return ISTANCE;
+    }
+
+    public static GameMap getInstance(int dimension) {
+        if (ISTANCE == null) {
+            ISTANCE = new GameMap(dimension);
         }
         return ISTANCE;
     }
@@ -105,7 +113,6 @@ public class GameMap {
 
     public void updateMatrix(int raw, int col, int x) {
         valueMatrix[raw][col] = x;
-        //System.out.println(Matrix.MatrixToString(valueMatrix));
     }
 
     //##MAP CONTROL
