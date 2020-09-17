@@ -25,8 +25,8 @@ public class Generatore {
     }
 
     private void updateCell(int x,int y){
-        //int n=rand.nextInt(side+1);
-        mat[x][y]=3;
+        int n=rand.nextInt(side+1);
+        mat[x][y]=;
         System.out.println(Matrix.MatrixToString(mat));
         if(y<side-1){
             y++;
