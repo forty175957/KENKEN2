@@ -4,10 +4,10 @@ import java.util.Random;
 public class Generatore {
     Random rand=new Random();
     int side;
-    GameMap map;
+    int[][] mat;
 
     public Generatore(int side) {
-        map=GameMap.getInstance(side);
+        mat=new int[side][side];
         this.side=side;
         Random rand=new Random();
         updateCell(0,0);
@@ -15,20 +15,20 @@ public class Generatore {
 
     private void updateCell(int x,int y){
         //int n=rand.nextInt(side+1);
-        map.valueMatrix[x][y]=3;
+        mat[x][y]=3;
+        System.out.println(Matrix.MatrixToString(mat));
         if(x<side-1){
-            updateCell(x++,y);
-            return;
+            y++;
         }
         else if(x==side-1){
-            updateCell(0,y++);
-            return;
+            x++;y=0;
         }
+        updateCell(x,y);
     }
 
     public static  void main(String[] args){
         Generatore g=new Generatore(4);
-        System.out.println(Matrix.MatrixToString(g.map.valueMatrix));
+        System.out.println(Matrix.MatrixToString(g.mat));
 
     }
 }
