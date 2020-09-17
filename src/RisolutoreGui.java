@@ -14,11 +14,11 @@ public class RisolutoreGui extends JFrame {
         super("RISOLUTORE-GUI");
         soluzioni=s;
         Container cp = getContentPane();
-        cp.setLayout(new GridLayout(1,4));
-        this.setResizable(true);
+        cp.setLayout(new GridLayout(1,3));
+        this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
-        setSize(new Dimension(600, 70));
+        setSize(new Dimension(400, 70));
         setVisible(true);
         JButton next=new JButton("NEXT");
         JButton previous=new JButton("PREVIOUS");

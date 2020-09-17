@@ -38,7 +38,7 @@ public class GameMap {
                 b.addCell(x, y);
             }
         }
-        resetMap();
+        updateMap();
     }
 
 

@@ -8,7 +8,7 @@ import javax.swing.*;
 public class MapUtil {
 
     public static void load() {
-        String s=loadFile();
+        String s=readFile();
         System.out.println(s);
         JSONParser parser = new JSONParser();
         try {
@@ -37,7 +37,7 @@ public class MapUtil {
 
 
 
-    public static String save() {
+    public static void save() {
         JSONObject obj = new JSONObject();
         int[][] MATRIX = GameMap.getInstance().map;
         int[][] values = GameMap.getInstance().getValues();
@@ -54,11 +54,10 @@ public class MapUtil {
             e.printStackTrace();
         }
         String jsonString = obj.toJSONString();
-        System.out.println(jsonString);
-        return jsonString;
+        writeFile(jsonString);
     }
 
-    private static String loadFile(){
+    private static String readFile(){
         String s="";
         JFileChooser fileChooser = new JFileChooser();
         int n = fileChooser.showOpenDialog(new JPanel());
@@ -70,9 +69,6 @@ public class MapUtil {
             while((text=inStream.readLine()) != null){
                 s+=text;
             }
-            System.out.println(s);
-            System.out.println("---------------------");
-
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }
@@ -80,5 +76,22 @@ public class MapUtil {
             e.printStackTrace();
         }
         return s;
+    }
+    private static void writeFile(String jsonString){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(new JPanel());
+        File f = fileChooser.getSelectedFile();
+        try {
+            FileWriter fInput = new FileWriter(f);
+            BufferedWriter outStream = new BufferedWriter(fInput);
+            outStream.write(jsonString);
+            outStream.flush();
+            outStream.close();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

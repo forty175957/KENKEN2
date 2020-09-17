@@ -8,18 +8,17 @@ import java.awt.event.KeyListener;
 public class InputBoxPanel extends JFrame implements KeyListener{
     JLabel label;
     JButton setBt;
-    JButton resolveBt;
     JTextField textfield1;
     Cell c;
+
     public InputBoxPanel(Cell cell){
         super("Edit Cell");
         c=cell;
         setLocation(500,500);
         getContentPane().setLayout(new FlowLayout());
         textfield1 = new JTextField("",10);
-        JLabel label=new JLabel("INSERT VALUE");
-        JButton setBt= new JButton("SET");
-        JButton resolveBt= new JButton("RESOLVE");
+        label=new JLabel("INSERT VALUE");
+        setBt= new JButton("SET");
         textfield1.addKeyListener(this);
 
 
@@ -37,16 +36,9 @@ public class InputBoxPanel extends JFrame implements KeyListener{
                     }
                 }
             });
-            resolveBt.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    new RisolutoreMio(c.block);
-                }
-            });
         getContentPane().add(label);
         getContentPane().add(textfield1);
         getContentPane().add(setBt);
-        getContentPane().add(resolveBt);
         pack();
         setVisible(true);
 

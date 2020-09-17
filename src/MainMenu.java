@@ -9,16 +9,23 @@ public class MainMenu extends JFrame {
         super("MENU");
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(1,4));
-        this.setResizable(true);
+        this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
-        setSize(new Dimension(600, 70));
+        setSize(new Dimension(720, 70));
         setVisible(true);
         JButton newBt=new JButton("NEW");
         JButton loadBt=new JButton("LOAD");
         JButton saveBt=new JButton("SAVE");
         JButton exitBt=new JButton("EXIT");
         JButton resetBt=new JButton("RESET MAP");
+        JButton resolveBt= new JButton("RESOLVE");
+        resolveBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                new Risolutore();
+            }
+        });
         newBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +60,7 @@ public class MainMenu extends JFrame {
         cp.add(loadBt);
         cp.add(saveBt);
         cp.add(exitBt);
+        cp.add(resolveBt);
         cp.add(resetBt);
 
     }
