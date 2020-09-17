@@ -24,9 +24,9 @@ public class Generatore {
         return true;
     }
 
-    private void updateCell(int x,int y){
+    private void updateCell2(int x,int y,int excluded){
         int n=rand.nextInt(side+1);
-        if(checkMatrix(x,y,n)) {
+        while(checkMatrix(x,y,n) && n!=excluded) {
             mat[x][y] = n;
             System.out.println(Matrix.MatrixToString(mat));
             if (y < side - 1) {
@@ -35,9 +35,10 @@ public class Generatore {
                 x++;
                 y = 0;
             }
-            updateCell(x, y);
+            else if(x==side-1 && y==side-1) return;
+            updateCell2(x, y,0);
         }else{
-            updateCell(x,y);
+            updateCell2(x,y);
         }
     }
 
