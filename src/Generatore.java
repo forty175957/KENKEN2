@@ -26,15 +26,19 @@ public class Generatore {
 
     private void updateCell(int x,int y){
         int n=rand.nextInt(side+1);
-        mat[x][y]=;
-        System.out.println(Matrix.MatrixToString(mat));
-        if(y<side-1){
-            y++;
+        if(checkMatrix(x,y,n)) {
+            mat[x][y] = n;
+            System.out.println(Matrix.MatrixToString(mat));
+            if (y < side - 1) {
+                y++;
+            } else if (y == side - 1) {
+                x++;
+                y = 0;
+            }
+            updateCell(x, y);
+        }else{
+            updateCell(x,y);
         }
-        else if(y==side-1){
-            x++;y=0;
-        }
-        updateCell(x,y);
     }
 
     public static  void main(String[] args){

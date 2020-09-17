@@ -15,8 +15,7 @@ public class Risolutore {
         new RisolutoreGui(solutionMap);
     }
 
-    public void solveBlock(Block bl)
-    {
+    public void solveBlock(Block bl) {
         Cell empty = bl.findEmpty();
         if (empty != null) {
             for (int i = 1; i < GameMap.getInstance().mapSide + 1; i++) {
