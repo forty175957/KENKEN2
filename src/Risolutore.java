@@ -33,6 +33,7 @@ public class Risolutore {
         sol.clear();
         int index =0;
         for(Cell c:block.cells) solveMio(b);
+        //RisolviMappa();
     }
 
     public void solveMio(Block b) {
@@ -51,7 +52,7 @@ public class Risolutore {
                 }
             }
             soluzioniMappa.add(blocchiRisolti);
-            System.out.print(soluzioniMappa.size());
+            System.out.println(soluzioniMappa.size());
 
         }
         else {
@@ -65,20 +66,30 @@ public class Risolutore {
                             blocchiRisolti.add(b);
                             System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
                             soluzioni.clear();
+                            break;
                         }
                     }
                 }
                 soluzioniMappa.add(blocchiRisolti);
-                System.out.print(soluzioniMappa.size());
+                System.out.println(soluzioniMappa.size());
             }
         }
     }
 
-    /*public void RisolviMappa() {
+    public void RisolviMappa() {
+        int[][] gm = GameMap.getInstance().valueMatrix.clone();
         for (int i = 1; i <= GameMap.getInstance().blocks.size(); i++) {
             Block bl = GameMap.getInstance().blocks.get(i);
-            for()
+            solveMio(bl);
+
 
         }
-    }*/
+        for (int i = 1; i <= GameMap.getInstance().blocks.size(); i++) {
+            Block bl = GameMap.getInstance().blocks.get(i);
+            for (int j = 0; j < soluzioniMappa.get(i).size(); j++) {
+                bl = soluzioniMappa.get(i).get(j);
+                if (bl.checkBlock()) break;
+            }
+        }
+    }
 }

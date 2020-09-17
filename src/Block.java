@@ -13,6 +13,14 @@ public class Block {
         this.cells = new ArrayList<Cell>();
     }
 
+    public Block(Block bl) {
+        this.blockId = bl.blockId;
+        this.cells = bl.cells;
+        this.operation=bl.operation;
+        this.Gmap=bl.Gmap;
+        this.resultValue=bl.resultValue;
+    }
+
     public void setAll(String OP, int val) {
         operation = OP;
         resultValue = val;
@@ -71,7 +79,6 @@ public class Block {
 
     public boolean checkBlock() {
         int result = 0;
-
         switch (operation) {
             case "+":
                 for (Cell c : cells) {

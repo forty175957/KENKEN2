@@ -40,7 +40,7 @@ public class InputBoxPanel extends JFrame implements KeyListener{
             resolveBt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    new Risolutore(c.block);
+                    new RisolutoreMio(c.block);
                 }
             });
         getContentPane().add(label);
