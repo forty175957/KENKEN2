@@ -9,8 +9,6 @@ public class RisolutoreMio {
     private Block block;
     ArrayList<int[][]> solutionMap = new ArrayList<>();
     ArrayList<int[][]> soluzioni = new ArrayList<>();
-    ArrayList<Block> blocchiRisolti= new ArrayList<>();
-    ArrayList<ArrayList<Block>> soluzioniMappa = new ArrayList<>();
 
 
 
