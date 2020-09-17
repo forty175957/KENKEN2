@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RisolutoreGui extends JFrame {
-    int counter=0;
+    int counter=1;
     JTextField counterDisplay;
     ArrayList<int[][]> soluzioni;
 
@@ -27,30 +27,30 @@ public class RisolutoreGui extends JFrame {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(counter!=soluzioni.size()-1){
+                if(counter!=soluzioni.size()){
                     counter++;
-                    showMap(counter);
+                    showMap();
                 }
             }
         });
         previous.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(counter!=0) {
+                if(counter!=1) {
                     counter--;
-                    showMap(counter);
+                    showMap();
                 }
             }
         });
         cp.add(previous);
         cp.add(counterDisplay);
         cp.add(next);
-        showMap(counter);
+        showMap();
     }
 
-    public void showMap(int n) {
+    public void showMap() {
         counterDisplay.setText("Soluzione n: "+new Integer(counter).toString());
-        int[][] currentSol = soluzioni.get(n);
+        int[][] currentSol = soluzioni.get(counter-1);
         GameMap.getInstance().valueMatrix=currentSol;
         GameMap.getInstance().updateMap();
     }
