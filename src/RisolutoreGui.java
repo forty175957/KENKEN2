@@ -11,7 +11,7 @@ public class RisolutoreGui extends JFrame {
     ArrayList<int[][]> soluzioni;
 
     public RisolutoreGui(ArrayList<int[][]> s){
-        super("RISOLUTORE-GUI");
+        super("SOLUZIONI");
         soluzioni=s;
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(1,3));

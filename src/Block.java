@@ -101,8 +101,6 @@ public class Block {
                     else result = result * c.n;
                     if (result > resultValue) return false;
                     if (result == resultValue) {
-                        //System.out.println("block " + blockId + " completed!!" + result);
-                        //System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
                         return true;
                     }
 
@@ -118,9 +116,6 @@ public class Block {
                             }
                         }
                         if (result == resultValue) {
-                            //System.out.println("block " + blockId + " completed!!" + result);
-                            //System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
-
                             return true;
                         }
                     }
@@ -136,8 +131,6 @@ public class Block {
                             }
                         }
                         if (result == resultValue) {
-                            //System.out.println("block " + blockId + " completed!!" + result);
-                            //System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
                             return true;
                         }
                     }
@@ -149,82 +142,3 @@ public class Block {
     }
 }
 
-
-/* public boolean checkBlockMio(){
-        int result=0;
-        int index =0;
-
-        switch(operation) {
-            case "+":
-                for (Cell c : cells) {
-                    index+=1;
-                    if (!(c.n == 0)) {
-                        result = result + c.n;
-                        if (result > resultValue) return false;
-                        if (result == resultValue && index==cells.size()) {
-                            System.out.println("block " + blockId + " completed!!" + result);
-                            return true;
-                        }
-                    }
-                }
-                index=0;
-                break;
-            case "*":
-                for (Cell c : cells) {
-                    index+=1;
-                    if(c.n==0) {
-                        result=0;
-                        return false;
-                    }
-                    if (result == 0) result = c.n;
-                    else result = result * c.n;
-                    if (result > resultValue) return false;
-                    if (result == resultValue && index==cells.size()) {
-                        System.out.println("block " + blockId + " completed!!" + result);
-                        return true;
-                    }
-
-                }
-                index=0;
-                break;
-            case "-":
-                for (Cell c : cells) {
-                    index+=1;
-                    if(c.n!=0) {
-                        result = c.n;
-                        for (Cell c2 : cells) {
-                            if (c != c2) {
-                                result -= c2.n;
-                            }
-                        }
-                        if (result == resultValue && index==cells.size()) {
-                            System.out.println("block " + blockId + " completed!!" + result);
-                            return true;
-                        }
-                    }
-                }
-                index=0;
-                break;
-            case "/":
-                for (Cell c : cells) {
-                    index+=1;
-                    if(c.n!=0) {
-                        result = c.n;
-                        for (Cell c2 : cells) {
-                            if (c.n != c2.n) {
-                                result /= c2.n;
-                            }
-                        }
-                        if (result == resultValue && index==cells.size()) {
-                            System.out.println("block " + blockId + " completed!!" + result);
-                            return true;
-                        }
-                    }
-                }
-                index=0;
-                break;
-        }
-        System.out.println(result + "  " + resultValue);
-        return false;
-    }
- */
