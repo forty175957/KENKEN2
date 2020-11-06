@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Block {
@@ -6,7 +5,6 @@ public class Block {
     public String operation;
     public int resultValue;
     private int blockId;
-    private GameMap Gmap = GameMap.getInstance();
 
     public Block(int blockId) {
         this.blockId = blockId;
@@ -17,7 +15,6 @@ public class Block {
         this.blockId = bl.blockId;
         this.cells = bl.cells;
         this.operation=bl.operation;
-        this.Gmap=bl.Gmap;
         this.resultValue=bl.resultValue;
     }
 
@@ -26,29 +23,16 @@ public class Block {
         resultValue = val;
     }
 
-    public void setOperation(String OP) {
-        operation = OP;
-    }
-
-    public void setResultValue(int val) {
-        resultValue = val;
-        System.out.println("id:" + blockId + " op:" + operation + " res:" + resultValue);
-    }
-
-    public int getBlockSize() {
-        return cells.size();
-    }
-
     public int getId() {
         return blockId;
     }
 
     public Cell addCell(int x, int y) {
-        Cell cell;
-        cell = new Cell(x, y, this);
-        cells.add(cell);
-        Gmap.getFrame().getContentPane().add(cell);
-        return cell;
+        Cell gameCell;
+        gameCell = new Cell(x, y, this);
+        cells.add(gameCell);
+        Mediator.getInstance().getFrame().getContentPane().add(gameCell);
+        return gameCell;
     }
 
     public void completedBlock(boolean comp) {
@@ -69,14 +53,6 @@ public class Block {
         return result;
     }
 
-    public Cell getCell(int x, int y) {
-        Cell cell = null;
-        for (Cell c : cells) {
-            if (c.x == x && c.y == y) cell = c;
-        }
-        return cell;
-    }
-
     public boolean checkBlock() {
         int result = 0;
         switch (operation) {
@@ -85,8 +61,6 @@ public class Block {
                     result = result + c.n;
                     if (result > resultValue) return false;
                     if (result == resultValue) {
-                        //System.out.println("block " + blockId + " completed!!" + result);
-                        //System.out.println(Matrix.MatrixToString(GameMap.getInstance().valueMatrix));
                         return true;
                     }
                 }
@@ -137,7 +111,6 @@ public class Block {
                 }
                 break;
         }
-        //System.out.println(result + "  " + resultValue);
         return false;
     }
 }

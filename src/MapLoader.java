@@ -1,52 +1,34 @@
-import java.io.*;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import javax.swing.*;
+import java.io.*;
 
-public class MapUtil {
+public class MapLoader {
 
-    public static void load() {
-        String s=readFile();
-        System.out.println(s);
+    public MapModel load(String jsonString) {
+        MapModel map = new MapModel();
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(s);
+            Object obj = parser.parse(jsonString);
             JSONObject data = (JSONObject) obj;
-            int[][] mat = Matrix.StringtoMatrix((String) data.get("matrix"), 5);
-            GameMap.getInstance().map = mat;
-            int[][] values = Matrix.StringtoMatrix((String) data.get("values"), 5);
-            GameMap.getInstance().valueMatrix = values;
-            String[] res=Matrix.StringToList((String) data.get("results"));
-            GameMap.getInstance().setResult(res);
-            String[] op = Matrix.StringToList((String) data.get("operators"));
-            GameMap.getInstance().setOperator(op);
-
-            //inizializzo GameMap
-            new KenKenMap(5,5);
-            GameMap.getInstance().updateBlocks(op,res);
-            GameMap.getInstance().initGmap();
-
+            map.blocksMat = Matrix.StringtoMatrix((String) data.get("matrix"), 5);
+            map.valuesMat = Matrix.StringtoMatrix((String) data.get("values"), 5);
+            map.results=Matrix.StringToList((String) data.get("results"));
+            map.blocksOp = Matrix.StringToList((String) data.get("operators"));
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
+        return map;
     }
 
 
 
-    public static void save() {
+    public String save(MapModel map) {
         JSONObject obj = new JSONObject();
-        int[][] MATRIX = GameMap.getInstance().map;
-        int[][] values = GameMap.getInstance().getValues();
-        String[] result=GameMap.getInstance().getResult();
-        String[] operators = GameMap.getInstance().getOperators();
-        obj.put("matrix", Matrix.MatrixToString(MATRIX));
-        obj.put("values", Matrix.MatrixToString(values));
-        obj.put("operators", Matrix.ListToString(operators));
-        obj.put("results",Matrix.ListToString(result));
+        obj.put("matrix", Matrix.MatrixToString(map.blocksMat));
+        obj.put("values", Matrix.MatrixToString(map.valuesMat));
+        obj.put("operators", Matrix.ListToString(map.blocksOp));
+        obj.put("results",Matrix.ListToString(map.results));
         StringWriter out = new StringWriter();
         try {
             obj.writeJSONString(out);
@@ -54,10 +36,10 @@ public class MapUtil {
             e.printStackTrace();
         }
         String jsonString = obj.toJSONString();
-        writeFile(jsonString);
+        return jsonString;
     }
 
-    private static String readFile(){
+    public String readFile(){
         String s="";
         JFileChooser fileChooser = new JFileChooser();
         int n = fileChooser.showOpenDialog(new JPanel());
@@ -77,7 +59,8 @@ public class MapUtil {
         }
         return s;
     }
-    private static void writeFile(String jsonString){
+
+    public void writeFile(String jsonString){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.showOpenDialog(new JPanel());
         File f = fileChooser.getSelectedFile();
@@ -94,4 +77,5 @@ public class MapUtil {
             e.printStackTrace();
         }
     }
+
 }

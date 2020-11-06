@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class RisolutoreGui extends JFrame {
     int counter=1;
@@ -16,7 +15,7 @@ public class RisolutoreGui extends JFrame {
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(1,3));
         this.setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setSize(new Dimension(400, 70));
         setVisible(true);
@@ -51,8 +50,8 @@ public class RisolutoreGui extends JFrame {
     public void showMap() {
         counterDisplay.setText("Soluzione n: "+new Integer(counter).toString());
         int[][] currentSol = soluzioni.get(counter-1);
-        GameMap.getInstance().valueMatrix=currentSol;
-        GameMap.getInstance().updateMap();
+        Mediator.getInstance().getMap().valueMatrix=currentSol;
+        Mediator.getInstance().getMap().updateMap();
     }
 
 }

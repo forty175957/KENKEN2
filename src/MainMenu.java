@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends JFrame {
+    private MapAdapter loader = new MapAdapter();
 
-    public  MainMenu(){
+    public MainMenu(){
         super("MENU");
         Container cp = getContentPane();
         cp.setLayout(new GridLayout(1,4));
@@ -35,13 +36,13 @@ public class MainMenu extends JFrame {
         loadBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapUtil.load();
+                loader.load();
             }
         });
         saveBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapUtil.save();
+                loader.save();
             }
         });
         exitBt.addActionListener(new ActionListener() {
@@ -53,7 +54,7 @@ public class MainMenu extends JFrame {
         resetBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                GameMap.getInstance().resetMap();
+                Mediator.getInstance().getMap().resetMap();
             }
         });
         cp.add(newBt);
@@ -64,4 +65,6 @@ public class MainMenu extends JFrame {
         cp.add(resetBt);
 
     }
+
+
 }
