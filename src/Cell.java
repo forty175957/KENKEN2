@@ -10,7 +10,6 @@ public class Cell extends JButton {
     public int n;
     String description="";
     Graphics g;
-    Container cp;
     Block block;
     public boolean completed;
 
