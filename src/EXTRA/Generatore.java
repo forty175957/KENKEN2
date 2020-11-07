@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import Main.Matrix;
 import java.util.Random;
 
 public class Generatore {
