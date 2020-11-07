@@ -1,3 +1,8 @@
+package Main;
+
+import Map.GameMap;
+import UI.Cell;
+import UI.RisolutoreGui;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -11,7 +16,7 @@ public class Risolutore {
 
 
     public Risolutore() {
-        map=Mediator.getInstance().getMap();
+        map= Mediator.getInstance().getMap();
         map.resetMap();
         sol.clear();
         solveMap();
