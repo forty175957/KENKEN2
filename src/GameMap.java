@@ -1,42 +1,61 @@
-import javax.swing.*;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class GameMap {
-    private static GameMap ISTANCE;
-    private JFrame frame;
-    private Container cp;
     public int mapSide = 5;
     private String[] OPS = {"+", "-", "/", "*"};
-    public int[][] map;
+    public int[][] blocksMap;
     public int[][] valueMatrix;
     public HashMap<Integer, Block> blocks = new HashMap<Integer, Block>();
 
-
-    private GameMap(int mapSide) {
-        this.mapSide = mapSide;
-        valueMatrix = new int[mapSide][mapSide];
+    public void loadMap(MapModel map) {
+        blocksMap = map.blocksMat;
+        valueMatrix = map.valuesMat;
+        new KenKenMap(5,5);
+        updateBlocks(map.blocksOp, map.results);
+        initGmap();
     }
 
-    public static GameMap getInstance() {
-        if (ISTANCE == null) {
-            ISTANCE = new GameMap(5);
+    public MapModel dumpMap(){
+        MapModel map = new MapModel();
+        map.blocksMat=this.blocksMap;
+        map.valuesMat=this.valueMatrix;
+        map.blocksOp=this.getOperators();
+        map.results=this.getResult();
+        return map;
+    }
+
+
+    public void updateMap(){
+        for (int i=1;i<blocks.size()+1;i++) {
+            for (Cell c:blocks.get(i).cells) {
+                c.updateCell();
+            }
         }
-        return ISTANCE;
+        Mediator.getInstance().getFrame().repaint();
     }
 
-    public static GameMap getInstance(int dimension) {
-        if (ISTANCE == null) {
-            ISTANCE = new GameMap(dimension);
-        }
-        return ISTANCE;
+
+    public void updateMatrix(int raw, int col, int x) {
+        valueMatrix[raw][col] = x;
     }
+
+    //##MAP CONTROL
+    public boolean checkMatrix(int row, int col, int x) {
+        for (int i = 0; i < mapSide; i++) {
+            if (valueMatrix[row][i] == x) {
+                return false;//NOT VALID UPDATE COL
+            } else if (valueMatrix[i][col] == x) {
+                return false;//NOT VALID UPDATE ROW
+            }
+        }
+        return true;
+    }
+
 
     public void initGmap() {
         for (int x = 0; x < mapSide; x++) {
             for (int y = 0; y < mapSide; y++) {
-                int id = map[x][y];
+                int id = blocksMap[x][y];
                 Block b = null;
                 if (blocks.containsKey(id)) {
                     b = blocks.get(id);
@@ -60,86 +79,19 @@ public class GameMap {
         }
     }
 
-    public void setFrame(JFrame f) {
-        frame = f;
-        cp = f.getContentPane();
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    //##MAP ADAPTER
-    public int[][] getValues() {
-        return valueMatrix;
-    }
-
-    public String[] getOperators() {
-        String[] op = new String[blocks.size()];
-        for (int i = 1; i < blocks.size() + 1; i++) {
-            op[i - 1] = blocks.get(i).operation;
-        }
-        return op;
-    }
-
-    public void updateMap(){
-        for (int i=1;i<blocks.size()+1;i++) {
-            for (Cell c:blocks.get(i).cells) {
-                c.update();
-            }
-        }
-        frame.repaint();
-    }
-
-    public void setOperator(String[] op) {
-        for (int i = 1; i < blocks.size() + 1; i++) {
-            blocks.get(i).operation = op[i - 1];
-        }
-    }
-
-    public void setResult(String[] res) {
-        for (int i = 1; i < blocks.size() + 1; i++) {
-            blocks.get(i).resultValue = Integer.parseInt(res[i - 1]);
-        }
-    }
-
-    public String[] getResult() {
-        String[] res = new String[blocks.size()];
-        for (int i = 1; i < blocks.size() + 1; i++) {
-            res[i - 1] = new Integer(blocks.get(i).resultValue).toString();
-        }
-        return res;
-    }
-
-    public void updateMatrix(int raw, int col, int x) {
-        valueMatrix[raw][col] = x;
-    }
-
-    //##MAP CONTROL
-    public boolean checkMatrix(int row, int col, int x) {
-        for (int i = 0; i < mapSide; i++) {
-            if (valueMatrix[row][i] == x) {
-                return false;//NOT VALID UPDATE COL
-            } else if (valueMatrix[i][col] == x) {
-                return false;//NOT VALID UPDATE ROW
-            }
-        }
-        return true;
-    }
-
 
     public void updateBlocks(String[] op, String[] res) {
         for (int i = 0; i < op.length; i++) {
             Block b = new Block(i + 1);
             b.setAll(op[i], Integer.parseInt(res[i]));
-            GameMap.getInstance().blocks.put(i + 1, b);
+            blocks.put(i + 1, b);
         }
     }
 
-    public boolean checkTop(int x, int y) {
-        if (y > 1) {
-            int id = map[x][y];
-            if (map[x][y - 1] == id) {
+    public boolean checkRight(int x, int y) {
+        if (y < mapSide - 1) {
+            int id = blocksMap[x][y];
+            if (blocksMap[x][y + 1] == blocksMap[x][y]) {
                 return true;
             }
         }
@@ -147,29 +99,9 @@ public class GameMap {
     }
 
     public boolean checkBottom(int x, int y) {
-        if (y < mapSide - 1) {
-            int id = map[x][y];
-            if (map[x][y + 1] == map[x][y]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkLeft(int x, int y) {
-        if (x > 1) {
-            int id = map[x][y];
-            if (map[x - 1][y] == map[x][y]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkRight(int x, int y) {
         if (x < mapSide - 1) {
-            int id = map[x][y];
-            if (map[x + 1][y] == map[x][y]) {
+            int id = blocksMap[x][y];
+            if (blocksMap[x + 1][y] == blocksMap[x][y]) {
                 return true;
             }
         }
@@ -190,6 +122,22 @@ public class GameMap {
             if(!flag)break;
         }
         return bl;
+    }
+
+    public String[] getOperators() {
+        String[] op = new String[blocks.size()];
+        for (int i = 1; i < blocks.size() + 1; i++) {
+            op[i - 1] = blocks.get(i).operation;
+        }
+        return op;
+    }
+
+    public String[] getResult() {
+        String[] res = new String[blocks.size()];
+        for (int i = 1; i < blocks.size() + 1; i++) {
+            res[i - 1] = new Integer(blocks.get(i).resultValue).toString();
+        }
+        return res;
     }
 }
 

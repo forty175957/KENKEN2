@@ -6,14 +6,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputBoxPanel extends JFrame implements KeyListener{
+    private Mediator med = Mediator.getInstance();
     JLabel label;
     JButton setBt;
     JTextField textfield1;
     Cell c;
 
-    public InputBoxPanel(Cell cell){
+    public InputBoxPanel(Cell gameCell){
         super("Edit Cell");
-        c=cell;
+        c= gameCell;
         setLocation(500,500);
         getContentPane().setLayout(new FlowLayout());
         textfield1 = new JTextField("",10);
@@ -30,9 +31,9 @@ public class InputBoxPanel extends JFrame implements KeyListener{
                     label.setText("INVALID VALUE");
                 } else {
                     dispose();
-                    c.updateValueCell(val);
-                    GameMap.getInstance().getFrame().getContentPane().revalidate();
-                    GameMap.getInstance().getFrame().repaint();
+                    c.updateValue(val);
+                    med.getFrame().getContentPane().revalidate();
+                    med.getFrame().repaint();
                     }
                 }
             });
@@ -55,9 +56,9 @@ public class InputBoxPanel extends JFrame implements KeyListener{
                 label.setText("INVALID VALUE");
             } else {
                 dispose();
-                c.updateValueCell(val);
-                GameMap.getInstance().getFrame().getContentPane().revalidate();
-                GameMap.getInstance().getFrame().repaint();
+                c.updateValue(val);
+                med.getFrame().getContentPane().revalidate();
+                med.getFrame().repaint();
             }
         }
     }
