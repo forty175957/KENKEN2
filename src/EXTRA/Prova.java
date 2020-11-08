@@ -1,7 +1,7 @@
 package EXTRA;
 
 import java.util.*;
-import  Main.Matrix;
+import Core.Util;
 public class Prova {
 
     int[][] matrix ;
@@ -25,7 +25,7 @@ public class Prova {
             if (mat[x][y] == 0 && cont > 0) {
                 cont -= 1;           //DECREMENTO IL CONTATORE DEI BLOCCHI ID ANCORA DA POTER INSERIRE
                 mat[x][y] = nb;                   //INSERIMENTO DEL NUMERO DEL BLOCCO (BLOCCO ID)
-                System.out.println(Matrix.MatrixToString(mat));
+                System.out.println(Util.MatrixToString(mat));
             }
             if (direction == 1)                    //DESTRA
             {
@@ -62,7 +62,7 @@ public class Prova {
     {
         int[][] prova = creaMatrix(5);
         creaMatrix(prova,5,5);
-        System.out.println(Matrix.MatrixToString(prova));
+        System.out.println(Util.MatrixToString(prova));
     }
 
 }

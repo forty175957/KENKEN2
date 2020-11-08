@@ -1,8 +1,9 @@
 package UI;
 
-import Main.Mediator;
-import Main.Risolutore;
+import Core.Mediator;
+import Core.Risolutore;
 import Map.JsonMapAdapter;
+import Map.MapAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends JFrame {
-    private JsonMapAdapter loader = new JsonMapAdapter();
+    private Mediator med = Mediator.getInstance();
 
     public MainMenu(){
         super("MENU");
@@ -30,7 +31,7 @@ public class MainMenu extends JFrame {
         resolveBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                new Risolutore();
+                med.resolveMap();
             }
         });
         newBt.addActionListener(new ActionListener() {
@@ -42,25 +43,25 @@ public class MainMenu extends JFrame {
         loadBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loader.load();
+                med.loadMap();
             }
         });
         saveBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loader.save();
+                med.saveMap();
             }
         });
         exitBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                med.exit();
             }
         });
         resetBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Mediator.getInstance().getMap().resetMap();
+                med.resetMap();
             }
         });
         cp.add(newBt);

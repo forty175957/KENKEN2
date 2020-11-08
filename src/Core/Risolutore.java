@@ -1,9 +1,7 @@
-package Main;
+package Core;
 
 import Map.GameMap;
-import UI.Cell;
 import UI.RisolutoreGui;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -13,18 +11,18 @@ public class Risolutore {
     ArrayList<int[][]> solutionMap = new ArrayList<>();
     ArrayList<int[][]> soluzioni = new ArrayList<>();
 
-
-
-    public Risolutore() {
-        map= Mediator.getInstance().getMap();
+    public void solve() {
+        map=Mediator.getInstance().getMap();
         map.resetMap();
         sol.clear();
         solveMap();
-        for(int[][] stampaSol : solutionMap) System.out.println(Matrix.MatrixToString(stampaSol));
+        for(int[][] stampaSol : solutionMap) {
+            System.out.println(Util.MatrixToString(stampaSol));
+        }
         new RisolutoreGui(solutionMap);
     }
 
-    public void solveBlock(@NotNull Block bl) {
+    private void solveBlock(Block bl) {
         Cell empty = bl.findEmpty();
         if (empty != null) {
             for (int i = 1; i < map.mapSide + 1; i++) {
@@ -45,12 +43,12 @@ public class Risolutore {
         return;
     }
 
-    public void solveMap() {
+    private void solveMap() {
         Block bloc = new Block(map.findEmptyBlock());
         if (bloc != null) {
             solveBlock(bloc);
             if(bloc.checkBlock() && bloc.getId()== map.blocks.size()){
-                int[][] m = Matrix.cloneMatrix(map.valueMatrix);
+                int[][] m = Util.cloneMatrix(map.valueMatrix);
                 solutionMap.add(m);
             }
         }

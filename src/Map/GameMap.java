@@ -1,13 +1,12 @@
 package Map;
 
-import Main.Block;
-import Main.Mediator;
-import UI.Cell;
+import Core.Block;
+import Core.Mediator;
+import Core.Cell;
 import UI.KenKenMap;
-
 import java.util.*;
 
-public class GameMap {
+public class GameMap extends MapModel {
     public int mapSide = 5;
     private String[] OPS = {"+", "-", "/", "*"};
     public int[][] blocksMap;
@@ -35,9 +34,10 @@ public class GameMap {
     public void updateMap(){
         for (int i=1;i<blocks.size()+1;i++) {
             for (Cell c:blocks.get(i).cells) {
-                c.updateCell();
+                c.updateValue(valueMatrix[c.x][c.y]);
             }
         }
+        Mediator.getInstance().getFrame().revalidate();
         Mediator.getInstance().getFrame().repaint();
     }
 
@@ -80,8 +80,7 @@ public class GameMap {
         for (int i = 1; i < blocks.size() + 1; i++) {
             for (Cell c : blocks.get(i).cells) {
                 c.reset();
-                c.revalidate();
-                c.repaint();
+                c.updateValue(c.n);
             }
         }
     }
@@ -95,20 +94,20 @@ public class GameMap {
         }
     }
 
-    public boolean checkRight(int x, int y) {
-        if (y < mapSide - 1) {
-            int id = blocksMap[x][y];
-            if (blocksMap[x][y + 1] == blocksMap[x][y]) {
+    public boolean checkRight(Cell c) {
+        if (c.y < mapSide - 1) {
+            int id = blocksMap[c.x][c.y];
+            if (blocksMap[c.x][c.y + 1] == blocksMap[c.x][c.y]) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkBottom(int x, int y) {
-        if (x < mapSide - 1) {
-            int id = blocksMap[x][y];
-            if (blocksMap[x + 1][y] == blocksMap[x][y]) {
+    public boolean checkBottom(Cell c) {
+        if (c.x < mapSide - 1) {
+            int id = blocksMap[c.x][c.y];
+            if (blocksMap[c.x + 1][c.y] == blocksMap[c.x][c.y]) {
                 return true;
             }
         }

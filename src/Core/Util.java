@@ -1,8 +1,8 @@
-package Main;
+package Core;
 
 import java.util.Scanner;
 
-public class Matrix {
+public class Util {
     public static String MatrixToString(int[][] matrix)
     {
         StringBuilder sbResult = new StringBuilder();

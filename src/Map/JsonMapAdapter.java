@@ -1,52 +1,46 @@
 package Map;
-
-import Main.Matrix;
+import Core.Util;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import javax.swing.*;
 import java.io.*;
 
-public class JsonMapAdapter implements MapAdapter {
+public class JsonMapAdapter extends MapAdapter {
     @Override
-    public void load() {
+    public MapModel load() {
         String data = readFile();
-        MapModel map = load(data);
-        med.getMap().loadMap(map);
+        MapModel map = loadFile(data);
+        return map;
     }
 
     @Override
-    public void save() {
-        MapModel map = med.getMap().dumpMap();
-        String data = save(map);
+    public void save(MapModel map) {
+        String data = saveFile(map);
         writeFile(data);
     }
 
-
-    public MapModel load(String jsonString) {
+    public MapModel loadFile(String jsonString) {
         MapModel map = new MapModel();
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(jsonString);
             JSONObject data = (JSONObject) obj;
-            map.blocksMat = Matrix.StringtoMatrix((String) data.get("matrix"), 5);
-            map.valuesMat = Matrix.StringtoMatrix((String) data.get("values"), 5);
-            map.results= Matrix.StringToList((String) data.get("results"));
-            map.blocksOp = Matrix.StringToList((String) data.get("operators"));
+            map.blocksMat = Util.StringtoMatrix((String) data.get("matrix"), 5);
+            map.valuesMat = Util.StringtoMatrix((String) data.get("values"), 5);
+            map.results= Util.StringToList((String) data.get("results"));
+            map.blocksOp = Util.StringToList((String) data.get("operators"));
         }catch (Exception e){
             e.printStackTrace();
         }
         return map;
     }
 
-
-
-    public String save(MapModel map) {
+    public String saveFile(MapModel map) {
         JSONObject obj = new JSONObject();
-        obj.put("matrix", Matrix.MatrixToString(map.blocksMat));
-        obj.put("values", Matrix.MatrixToString(map.valuesMat));
-        obj.put("operators", Matrix.ListToString(map.blocksOp));
-        obj.put("results", Matrix.ListToString(map.results));
+        obj.put("matrix", Util.MatrixToString(map.blocksMat));
+        obj.put("values", Util.MatrixToString(map.valuesMat));
+        obj.put("operators", Util.ListToString(map.blocksOp));
+        obj.put("results", Util.ListToString(map.results));
         StringWriter out = new StringWriter();
         try {
             obj.writeJSONString(out);

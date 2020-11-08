@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
-import Main.Matrix;
+import Core.Util;
 
 public class Generatore2 {
     Random rand=new Random();
@@ -17,7 +17,7 @@ public class Generatore2 {
         this.side=side;
         //updateCell(0,0);
         genBlocks(0,0,1,8);
-        System.out.println(Matrix.MatrixToString(map));
+        System.out.println(Util.MatrixToString(map));
     }
 
     public void genBlocks(int x,int y,int id, int nCells){

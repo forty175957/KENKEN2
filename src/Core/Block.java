@@ -1,6 +1,4 @@
-package Main;
-
-import UI.Cell;
+package Core;
 
 import java.util.ArrayList;
 
@@ -35,14 +33,13 @@ public class Block {
         Cell gameCell;
         gameCell = new Cell(x, y, this);
         cells.add(gameCell);
-        Mediator.getInstance().getFrame().getContentPane().add(gameCell);
+        Mediator.getInstance().getFrame().getContentPane().add(gameCell.bt);
         return gameCell;
     }
 
     public void completedBlock(boolean comp) {
         for (Cell c : cells) {
-            c.completed = comp;
-            c.repaint();
+            c.isCompleted(comp);
         }
     }
 

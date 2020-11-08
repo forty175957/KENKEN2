@@ -1,6 +1,6 @@
 package UI;
 
-import Main.Mediator;
+import Core.Mediator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class RisolutoreGui extends JFrame {
+public class RisolutoreGui extends  JFrame {
     int counter=1;
     JTextField counterDisplay;
     ArrayList<int[][]> soluzioni;

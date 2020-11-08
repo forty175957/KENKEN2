@@ -1,10 +1,8 @@
 package Map;
-import Main.Mediator;
+import Core.Mediator;
 
-public interface MapAdapter {
-    Mediator med = Mediator.getInstance();
-
-    void load();
-    void save();
+public abstract class MapAdapter {
+    public abstract MapModel load();
+    public abstract void save(MapModel map);
 
 }

@@ -1,4 +1,4 @@
-import Main.Matrix;
+import Core.Util;
 import java.util.Random;
 
 public class Generatore {
@@ -29,7 +29,6 @@ public class Generatore {
             int n = rand.nextInt(side + 1);
             if (checkMatrix(x, y, n)) {
                 mat[x][y] = n;
-                System.out.println(Matrix.MatrixToString(mat));
                 if (y < side - 1) {
                     y++;
                 } else if (y == side - 1) {
@@ -46,7 +45,7 @@ public class Generatore {
 
     public static  void main(String[] args){
         Generatore g=new Generatore(4);
-        System.out.println(Matrix.MatrixToString(g.mat));
+        System.out.println(Util.MatrixToString(g.mat));
 
     }
 }
