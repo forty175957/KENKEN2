@@ -5,6 +5,7 @@ import Map.GameMap;
 import Map.JsonMapAdapter;
 import Map.MapAdapter;
 import Map.MapModel;
+import UI.NewMapMenu;
 
 import javax.swing.*;
 
@@ -29,6 +30,9 @@ public class Mediator {
         Mediator.getInstance().getMap().resetMap();
     }
 
+    public void loadMenu(){
+        new NewMapMenu();
+    }
     public void loadMap(){
         MapModel map = loader.load();
         this.map.loadMap(map);
@@ -39,8 +43,8 @@ public class Mediator {
         loader.save(map);
     }
 
-    public void loadNewMap(){
-        BlocksBuilder bb = new BlocksBuilder(5);
+    public void loadNewMap(int side){
+        BlocksBuilder bb = new BlocksBuilder(side);
         MapModel map = bb.build();
         this.map.loadMap(map);
     }

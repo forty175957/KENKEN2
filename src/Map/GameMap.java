@@ -16,7 +16,8 @@ public class GameMap extends MapModel {
     public void loadMap(MapModel map) {
         blocksMap = map.blocksMat;
         valueMatrix = map.valuesMat;
-        new KenKenMap(5,5);
+        this.mapSide=this.valueMatrix.length;
+        new KenKenMap(this.mapSide);
         updateBlocks(map.blocksOp, map.results);
         initGmap();
     }
