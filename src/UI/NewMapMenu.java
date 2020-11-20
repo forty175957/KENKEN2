@@ -22,10 +22,10 @@ public class NewMapMenu extends JFrame {
         pack();
         setSize(new Dimension(720, 250));
         setVisible(true);
-        Icon icon1 = new ImageIcon("/home/lucky/Scaricati/kenken3x3.png");
-        Icon icon2 = new ImageIcon("/home/lucky/Scaricati/kenken4x4.png");
-        Icon icon3 = new ImageIcon("/home/lucky/Scaricati/kenken5x5.png");
-        Icon icon4 = new ImageIcon("/home/lucky/Scaricati/kenken6x6.png");
+        Icon icon1 = new ImageIcon("/home/lucky/IdeaProjects/KENKEN2/src/Image/kenken3x3.png");
+        Icon icon2 = new ImageIcon("/home/lucky/IdeaProjects/KENKEN2/src/Image/kenken4x4.png");
+        Icon icon3 = new ImageIcon("/home/lucky/IdeaProjects/KENKEN2/src/Image/kenken5x5.png");
+        Icon icon4 = new ImageIcon("/home/lucky/IdeaProjects/KENKEN2/src/Image/kenken6x6.png");
         JButton map3=new JButton(icon1);
         JButton map4=new JButton(icon2);
         JButton map5=new JButton(icon3);
