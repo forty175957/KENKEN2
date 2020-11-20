@@ -35,7 +35,7 @@ public class Risolutore {
                         solveMap();
                         soluzioni.clear();
                     }
-                    empty.updateValue(0);
+                    empty.reset();
                 }
             }
 

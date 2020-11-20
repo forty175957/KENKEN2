@@ -1,5 +1,6 @@
 package Core;
 
+import EXTRA.BlocksBuilder;
 import Map.GameMap;
 import Map.JsonMapAdapter;
 import Map.MapAdapter;
@@ -36,6 +37,12 @@ public class Mediator {
     public void saveMap(){
         MapModel map = this.map.dumpMap();
         loader.save(map);
+    }
+
+    public void loadNewMap(){
+        BlocksBuilder bb = new BlocksBuilder(5);
+        MapModel map = bb.build();
+        this.map.loadMap(map);
     }
 
     public void resolveMap() {

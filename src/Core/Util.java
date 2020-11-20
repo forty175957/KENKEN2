@@ -3,8 +3,16 @@ package Core;
 import java.util.Scanner;
 
 public class Util {
-    public static String MatrixToString(int[][] matrix)
-    {
+    public static int[][] createZeroMatrix(int n){
+        int[][] matrix = new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                matrix[i][j]=0;
+            }
+        }
+        return matrix;
+    }
+    public static String MatrixToString(int[][] matrix){
         StringBuilder sbResult = new StringBuilder();
         int size=matrix[0].length;
         for(int i = 0; i < size;i++)
@@ -46,12 +54,21 @@ public class Util {
         return  line;
     }
 
-    public static int[][] cloneMatrix(int[][] src) {
+    public static int[][] cloneMatrix(int[][] src){
         int length = src.length;
         int[][] target = new int[length][src[0].length];
         for (int i = 0; i < length; i++) {
             System.arraycopy(src[i], 0, target[i], 0, src[i].length);
         }
         return target;
+    }
+
+    public static boolean matrixContains(int[][] m,int i){
+        for (int x = 0; x < m.length; x++) {
+            for (int y = 0; y < m.length; y++) {
+                if (m[x][y] == i) return true;
+            }
+        }
+        return false;
     }
 }
