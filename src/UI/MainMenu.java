@@ -2,6 +2,7 @@ package UI;
 
 import Core.Mediator;
 import Core.Risolutore;
+import EXTRA.BlocksBuilder;
 import Map.JsonMapAdapter;
 import Map.MapAdapter;
 
@@ -37,7 +38,7 @@ public class MainMenu extends JFrame {
         newBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                med.loadNewMap();
             }
         });
         loadBt.addActionListener(new ActionListener() {
