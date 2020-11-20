@@ -90,7 +90,7 @@ public class Block {
                                 result -= c2.n;
                             }
                         }
-                        if (result == resultValue) {
+                        if (result == resultValue && result>0) {
                             return true;
                         }
                     }
