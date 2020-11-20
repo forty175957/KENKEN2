@@ -1,0 +1,1 @@
+{"operators":"*\t+\t+\t-\t+\t*\t+\t","values":"3\t4\t5\t1\t2\t\n5\t1\t2\t3\t4\t\n2\t3\t1\t4\t5\t\n4\t5\t3\t2\t1\t\n1\t2\t4\t5\t3\t\n","matrix":"1\t3\t3\t6\t6\t\n1\t2\t3\t5\t6\t\n1\t2\t3\t5\t6\t\n1\t2\t4\t5\t7\t\n1\t2\t4\t5\t7\t\n","results":"120\t11\t12\t1\t14\t40\t4\t"}
