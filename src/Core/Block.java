@@ -101,7 +101,7 @@ public class Block {
                     if (c.n != 0) {
                         result = c.n;
                         for (Cell c2 : cells) {
-                            if (c.n != c2.n) {
+                            if (c.n != c2.n && c2.n!=0) {
                                 result /= c2.n;
                             }
                         }

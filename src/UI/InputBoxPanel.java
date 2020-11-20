@@ -23,8 +23,8 @@ public class InputBoxPanel extends JFrame implements KeyListener{
         setLocation(500,500);
         getContentPane().setLayout(new FlowLayout());
         textfield1 = new JTextField("",10);
-        label=new JLabel("INSERT VALUE");
-        setBt= new JButton("SET");
+        label=new JLabel("INSERISCI UN VALORE");
+        setBt= new JButton("IMPOSTA");
         textfield1.addKeyListener(this);
 
 
@@ -33,7 +33,7 @@ public class InputBoxPanel extends JFrame implements KeyListener{
             public void actionPerformed(ActionEvent arg0) {
                 int val = new Integer(textfield1.getText());
                 if (!c.checkCellUpdate(val)) {
-                    label.setText("INVALID VALUE");
+                    label.setText("VALORE NON VALIDO");
                 } else {
                     dispose();
                     c.updateValue(val);
@@ -58,7 +58,7 @@ public class InputBoxPanel extends JFrame implements KeyListener{
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
             int val = new Integer(textfield1.getText());
             if (!c.checkCellUpdate(val)) {
-                label.setText("INVALID VALUE");
+                label.setText("INSERISCI UN VALORE");
             } else {
                 dispose();
                 c.updateValue(val);
