@@ -38,7 +38,7 @@ public class MainMenu extends JFrame {
         newBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                med.loadNewMap();
+                med.loadMenu();
             }
         });
         loadBt.addActionListener(new ActionListener() {
